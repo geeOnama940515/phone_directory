@@ -1,5 +1,5 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'ContactTile.dart';
 import 'ContactsDetails.dart';
 
 class ContactsDisplay extends StatelessWidget {
@@ -19,33 +19,57 @@ class ContactsDisplay extends StatelessWidget {
           color: Colors.white,
           child: Theme(
               data: Theme.of(context).copyWith(canvasColor: Colors.transparent),
-              child: getContactsView())),
+              child: getContactsView(context))),
     );
   }
 
-  List<String> getContactsElements() {
-    var items =
-        List<String>.generate(10, (counter) => "Contact : ${counter + 1}");
-    return items;
-  }
-
-  Widget getContactsView() {
-    var listItems = getContactsElements();
-    var listView = ListView.builder(
-        itemCount: listItems.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            leading: Icon(Icons.tag_faces),
-            title: Text(
-              listItems[index],
-              style: TextStyle(color: Colors.indigo),
-            ),
-            onTap: () {
-              contactsDetails(context);
-            },
-          );
-        });
-    return listView;
+  Widget getContactsView(context) {
+    List<String> listItems = [''];
+    final response = FirebaseDatabase.instance.reference().child('area').child(name);
+    return FutureBuilder(
+      future: response.once(),
+      builder: (context, AsyncSnapshot<DataSnapshot> snapshot) {
+        if (snapshot.hasData) {
+          listItems.clear();
+          Map<dynamic, dynamic> values = snapshot.data.value;
+          values.forEach((key, value) {
+            listItems.add(key);
+          });
+          listItems.sort();
+          return ListView.builder(
+              itemCount: listItems.length,
+              itemBuilder: (context, index) {
+                return Column(
+                  children: <Widget>[
+                    ListTile(
+                      leading: Icon(Icons.arrow_right),
+                      title: Text(
+                        listItems[index],
+                        style: TextStyle(color: Colors.indigo),
+                      ),
+                      onTap: () {
+                        contactsDetails(context);
+                      },
+                    ),
+                    Divider(
+                      color: Colors.indigo,
+                      thickness: 2.0,
+                      indent: 40.0,
+                      endIndent: 40.0,
+                    )
+                  ],
+                );
+              });
+        }
+        return Center(
+            child: Container(
+                width: MediaQuery.of(context).size.width*0.1,
+                height: MediaQuery.of(context).size.width*0.1,
+                child: CircularProgressIndicator()
+            )
+        );
+      },
+    );
   }
 
   void contactsDetails(context) {
