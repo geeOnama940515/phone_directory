@@ -9,11 +9,6 @@ void main() {
       //canvasColor: Colors.transparent,
       primaryColor: Colors.green,
     ),
-    home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.green,
-          title: Text('Jain PhoneBook Directory'),
-        ),
-        body: SectorsDisplay()),
+    home: SectorsDisplay(),
   ));
 }
