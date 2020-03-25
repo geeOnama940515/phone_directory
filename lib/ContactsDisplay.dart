@@ -65,15 +65,16 @@ class ContactsDisplayState extends State<ContactsDisplay> {
                           listItems[index],
                           style: TextStyle(color: Colors.indigo),
                         ),
+                        trailing: popupMenu(listItems[index]),
                         onTap: () {
                           contactsDetails(context);
                         },
                       ),
                       Divider(
                         color: Colors.indigo,
-                        thickness: 2.0,
-                        indent: 40.0,
-                        endIndent: 40.0,
+                        thickness: 1.2,
+                        indent: 15.0,
+                        endIndent: 15.0,
                       )
                     ],
                   );
@@ -99,5 +100,45 @@ class ContactsDisplayState extends State<ContactsDisplay> {
         builder: (BuildContext context) {
           return ContactsDetails();
         });
+  }
+
+  Widget popupMenu(name) {
+    return PopupMenuButton(
+      itemBuilder: (context) {
+        var list=List<PopupMenuEntry<Object>>();
+        list.add(
+          PopupMenuItem(
+            value: 1,
+            child: Text('Update'),
+          ),
+        );
+//        list.add(
+//          PopupMenuDivider()
+//        );
+        list.add(
+            PopupMenuItem(
+              value: 2,
+              child: Text('Delete'),
+            )
+        );
+        return list;
+      },
+      onSelected: (value) {
+        debugPrint('$value');
+        (value==1)?update(name):delete(name);
+      },
+      icon: Icon(Icons.more_vert),
+    );
+  }
+
+  void update(name){
+    print(name);
+    FirebaseDatabase.instance.reference().child('area').child(widget.name).child(name).set({'details' : '2'});
+    setState(() {});
+  }
+
+  void delete(name){
+    FirebaseDatabase.instance.reference().child('area').child(widget.name).child(name).remove();
+    setState(() {});
   }
 }

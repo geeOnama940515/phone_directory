@@ -1,18 +1,24 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:phone_directory/ContactsDisplay.dart';
+import 'package:phone_directory/UpdateSector.dart';
 
-class SectorsDisplay extends StatefulWidget{
+class SectorsDisplay extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     return SectorsDisplayState();
   }
 }
 
-class SectorsDisplayState extends State<SectorsDisplay>{
+class SectorsDisplayState extends State<SectorsDisplay> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: () {},
+        ),
         appBar: AppBar(
           backgroundColor: Colors.green,
           title: Text('Jain PhoneBook Directory'),
@@ -29,8 +35,7 @@ class SectorsDisplayState extends State<SectorsDisplay>{
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
             color: Colors.white,
-            child: getSectorView(context))
-    );
+            child: getSectorView(context)));
   }
 
   Widget getSectorView(context) {
@@ -59,20 +64,35 @@ class SectorsDisplayState extends State<SectorsDisplay>{
                           listItems[index],
                           style: TextStyle(color: Colors.indigo),
                         ),
+//                        onLongPress: () {
+//                          showMenu(
+//                            position: RelativeRect.fromRect(rect, container),
+//                              context: context,
+//                              items: <PopupMenuEntry>[
+//                                PopupMenuItem(
+//                                  child: Text('Update'),
+//                                ),
+//                                PopupMenuItem(
+//                                  child: Text('Delete'),
+//                                ),
+//                              ]
+//                          );
+//                        },
+                        trailing: popupMenu(listItems[index]),
                         onTap: () {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (_) => ContactsDisplay(
-                                    name: listItems[index],
-                                  )));
+                                        name: listItems[index],
+                                      )));
                         },
                       ),
                       Divider(
                         color: Colors.indigo,
-                        thickness: 2.0,
-                        indent: 40.0,
-                        endIndent: 40.0,
+                        thickness: 1.2,
+                        indent: 15.0,
+                        endIndent: 15.0,
                       )
                     ],
                   );
@@ -80,17 +100,52 @@ class SectorsDisplayState extends State<SectorsDisplay>{
           }
           return Center(
               child: Container(
-                  width: MediaQuery.of(context).size.width*0.1,
-                  height: MediaQuery.of(context).size.width*0.1,
-                  child: CircularProgressIndicator()
-              )
-          );
+                  width: MediaQuery.of(context).size.width * 0.1,
+                  height: MediaQuery.of(context).size.width * 0.1,
+                  child: CircularProgressIndicator()));
         },
       ),
     );
   }
 
+  Widget popupMenu(area) {
+    return PopupMenuButton(
+      itemBuilder: (context) {
+        var list=List<PopupMenuEntry<Object>>();
+        list.add(
+          PopupMenuItem(
+            value: 1,
+            child: Text('Update'),
+          ),
+        );
+//        list.add(
+//          PopupMenuDivider()
+//        );
+        list.add(
+          PopupMenuItem(
+            value: 2,
+            child: Text('Delete'),
+          )
+        );
+        return list;
+      },
+      onSelected: (value) {
+        (value==1)?update(area):delete(area);
+      },
+      icon: Icon(Icons.more_vert),
+    );
+  }
+
   Future<void> onRefresh() async {
+    setState(() {});
+  }
+
+  void update(area){
+    Navigator.push(context, MaterialPageRoute(builder: (_)=> UpdateSector(areaName: area)));
+  }
+
+  void delete(area){
+    FirebaseDatabase.instance.reference().child('area').child(area).remove();
     setState(() {});
   }
 }
