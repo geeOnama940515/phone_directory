@@ -7,7 +7,7 @@ void main() {
     title: 'Phone book directory',
     theme: ThemeData(
       //canvasColor: Colors.transparent,
-      primaryColor: Colors.green,
+      primaryColor: Colors.red,
     ),
     home: SectorsDisplay(),
   ));

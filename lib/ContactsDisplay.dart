@@ -14,11 +14,14 @@ class ContactsDisplay extends StatefulWidget {
 }
 
 class ContactsDisplayState extends State<ContactsDisplay> {
+
+  String n1,n2,n3,n4;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.green,
+        backgroundColor: Colors.red,
         title: Text(widget.name),
         actions: <Widget>[
           IconButton(
@@ -30,7 +33,10 @@ class ContactsDisplayState extends State<ContactsDisplay> {
         ],
       ),
       body: Container(
-          width: MediaQuery.of(context).size.width,
+          width: MediaQuery
+              .of(context)
+              .size
+              .width,
           color: Colors.white,
           child: Theme(
               data: Theme.of(context).copyWith(canvasColor: Colors.transparent),
@@ -41,7 +47,7 @@ class ContactsDisplayState extends State<ContactsDisplay> {
   Widget getContactsView(context) {
     List<String> listItems = [''];
     final response =
-        FirebaseDatabase.instance.reference().child('area').child(widget.name);
+    FirebaseDatabase.instance.reference().child('area').child(widget.name);
     return RefreshIndicator(
       onRefresh: onRefresh,
       child: FutureBuilder(
@@ -67,7 +73,19 @@ class ContactsDisplayState extends State<ContactsDisplay> {
                         ),
                         trailing: popupMenu(listItems[index]),
                         onTap: () {
-                          contactsDetails(context);
+                          FirebaseDatabase.instance.reference().child('area')
+                              .child(widget.name).child(listItems[index])
+                              .once().then((DataSnapshot snapshot){
+                                var data=snapshot.value;
+                                n1=data['name'];
+                                n2=data['phone'];
+                                n3=data['email'];
+                                n4=data['address'];
+                          });
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => ContactsDetails(name: n1,phone: n2,email: n3,address: n4,)));
                         },
                       ),
                       Divider(
@@ -82,8 +100,14 @@ class ContactsDisplayState extends State<ContactsDisplay> {
           }
           return Center(
               child: Container(
-                  width: MediaQuery.of(context).size.width * 0.1,
-                  height: MediaQuery.of(context).size.width * 0.1,
+                  width: MediaQuery
+                      .of(context)
+                      .size
+                      .width * 0.1,
+                  height: MediaQuery
+                      .of(context)
+                      .size
+                      .width * 0.1,
                   child: CircularProgressIndicator()));
         },
       ),
@@ -105,7 +129,7 @@ class ContactsDisplayState extends State<ContactsDisplay> {
   Widget popupMenu(name) {
     return PopupMenuButton(
       itemBuilder: (context) {
-        var list=List<PopupMenuEntry<Object>>();
+        var list = List<PopupMenuEntry<Object>>();
         list.add(
           PopupMenuItem(
             value: 1,
@@ -115,30 +139,38 @@ class ContactsDisplayState extends State<ContactsDisplay> {
 //        list.add(
 //          PopupMenuDivider()
 //        );
-        list.add(
-            PopupMenuItem(
-              value: 2,
-              child: Text('Delete'),
-            )
-        );
+        list.add(PopupMenuItem(
+          value: 2,
+          child: Text('Delete'),
+        ));
         return list;
       },
       onSelected: (value) {
         debugPrint('$value');
-        (value==1)?update(name):delete(name);
+        (value == 1) ? update(name) : delete(name);
       },
       icon: Icon(Icons.more_vert),
     );
   }
 
-  void update(name){
+  void update(name) {
     print(name);
-    FirebaseDatabase.instance.reference().child('area').child(widget.name).child(name).set({'details' : '2'});
+    FirebaseDatabase.instance
+        .reference()
+        .child('area')
+        .child(widget.name)
+        .child(name)
+        .set({'details': '2'});
     setState(() {});
   }
 
-  void delete(name){
-    FirebaseDatabase.instance.reference().child('area').child(widget.name).child(name).remove();
+  void delete(name) {
+    FirebaseDatabase.instance
+        .reference()
+        .child('area')
+        .child(widget.name)
+        .child(name)
+        .remove();
     setState(() {});
   }
 }

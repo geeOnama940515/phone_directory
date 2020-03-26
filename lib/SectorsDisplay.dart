@@ -2,6 +2,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:phone_directory/ContactsDisplay.dart';
+import 'package:phone_directory/NewContact.dart';
 import 'package:phone_directory/UpdateSector.dart';
 
 class SectorsDisplay extends StatefulWidget {
@@ -17,10 +18,13 @@ class SectorsDisplayState extends State<SectorsDisplay> {
     return Scaffold(
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (_) => NewContact()));
+          },
         ),
         appBar: AppBar(
-          backgroundColor: Colors.green,
+          backgroundColor: Colors.red,
           title: Text('Jain PhoneBook Directory'),
           actions: <Widget>[
             IconButton(
@@ -111,7 +115,7 @@ class SectorsDisplayState extends State<SectorsDisplay> {
   Widget popupMenu(area) {
     return PopupMenuButton(
       itemBuilder: (context) {
-        var list=List<PopupMenuEntry<Object>>();
+        var list = List<PopupMenuEntry<Object>>();
         list.add(
           PopupMenuItem(
             value: 1,
@@ -121,16 +125,14 @@ class SectorsDisplayState extends State<SectorsDisplay> {
 //        list.add(
 //          PopupMenuDivider()
 //        );
-        list.add(
-          PopupMenuItem(
-            value: 2,
-            child: Text('Delete'),
-          )
-        );
+        list.add(PopupMenuItem(
+          value: 2,
+          child: Text('Delete'),
+        ));
         return list;
       },
       onSelected: (value) {
-        (value==1)?update(area):delete(area);
+        (value == 1) ? update(area) : delete(area);
       },
       icon: Icon(Icons.more_vert),
     );
@@ -140,11 +142,12 @@ class SectorsDisplayState extends State<SectorsDisplay> {
     setState(() {});
   }
 
-  void update(area){
-    Navigator.push(context, MaterialPageRoute(builder: (_)=> UpdateSector(areaName: area)));
+  void update(area) {
+    Navigator.push(context,
+        MaterialPageRoute(builder: (_) => UpdateSector(areaName: area)));
   }
 
-  void delete(area){
+  void delete(area) {
     FirebaseDatabase.instance.reference().child('area').child(area).remove();
     setState(() {});
   }

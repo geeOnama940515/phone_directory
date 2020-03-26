@@ -29,6 +29,7 @@ class UpdateSectorState extends State<UpdateSector> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.red,
         title: Text('Update'),
       ),
       body: Container(
