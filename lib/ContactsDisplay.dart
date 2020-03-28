@@ -1,11 +1,13 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:phone_directory/UpdateContact.dart';
+import 'package:phone_directory/models/User.dart';
 import 'ContactsDetails.dart';
 
 class ContactsDisplay extends StatefulWidget {
-  final String name;
+  final String areaname;
 
-  ContactsDisplay({this.name});
+  ContactsDisplay({this.areaname});
 
   @override
   State<StatefulWidget> createState() {
@@ -14,40 +16,47 @@ class ContactsDisplay extends StatefulWidget {
 }
 
 class ContactsDisplayState extends State<ContactsDisplay> {
-
-  String n1,n2,n3,n4;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.red,
-        title: Text(widget.name),
+        title: Text(widget.areaname),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.refresh),
-            onPressed: () {
-              setState(() {});
+            icon: Icon(Icons.search),
+            onPressed: () async {
+              final User user = await showSearch(
+                  context: context,
+                  delegate: UserSearch(areaName: widget.areaname));
+              if (user != null) {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => ContactsDetails(
+                              area: widget.areaname,
+                              keys: user.key,
+                            )));
+              }
             },
           )
         ],
       ),
       body: Container(
-          width: MediaQuery
-              .of(context)
-              .size
-              .width,
+          width: MediaQuery.of(context).size.width,
           color: Colors.white,
-          child: Theme(
-              data: Theme.of(context).copyWith(canvasColor: Colors.transparent),
-              child: getContactsView(context))),
+          child: getContactsView(context)),
     );
   }
 
   Widget getContactsView(context) {
-    List<String> listItems = [''];
-    final response =
-    FirebaseDatabase.instance.reference().child('area').child(widget.name);
+    List<User> listItems = [];
+    //List<String> listItems = [''];
+    //List<String> listKeys=[''];
+    final response = FirebaseDatabase.instance
+        .reference()
+        .child('area')
+        .child(widget.areaname);
     return RefreshIndicator(
       onRefresh: onRefresh,
       child: FutureBuilder(
@@ -55,42 +64,43 @@ class ContactsDisplayState extends State<ContactsDisplay> {
         builder: (context, AsyncSnapshot<DataSnapshot> snapshot) {
           if (snapshot.hasData) {
             listItems.clear();
+            //listKeys.clear();
             Map<dynamic, dynamic> values = snapshot.data.value;
-            values.forEach((key, value) {
-              listItems.add(key);
-            });
-            listItems.sort();
+            if (values != null) {
+              values.forEach((key, value) {
+                listItems.add(User(
+                    key: key,
+                    name: value['name'],
+                    phone: value['phone'],
+                    email: value['email'],
+                    address: value['address']));
+              });
+            }
             return ListView.builder(
-                itemCount: listItems.length,
+                itemCount: listItems.length == 0 ? 0 : listItems.length,
                 itemBuilder: (context, index) {
                   return Column(
                     children: <Widget>[
                       ListTile(
                         leading: Icon(Icons.arrow_right),
                         title: Text(
-                          listItems[index],
+                          listItems[index].name,
                           style: TextStyle(color: Colors.indigo),
                         ),
                         trailing: popupMenu(listItems[index]),
                         onTap: () {
-                          FirebaseDatabase.instance.reference().child('area')
-                              .child(widget.name).child(listItems[index])
-                              .once().then((DataSnapshot snapshot){
-                                var data=snapshot.value;
-                                n1=data['name'];
-                                n2=data['phone'];
-                                n3=data['email'];
-                                n4=data['address'];
-                          });
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (_) => ContactsDetails(name: n1,phone: n2,email: n3,address: n4,)));
+                                  builder: (_) => ContactsDetails(
+                                        area: widget.areaname,
+                                        keys: listItems[index].key,
+                                      )));
                         },
                       ),
                       Divider(
-                        color: Colors.indigo,
-                        thickness: 1.2,
+                        color: Colors.red,
+                        thickness: 0.7,
                         indent: 15.0,
                         endIndent: 15.0,
                       )
@@ -100,14 +110,8 @@ class ContactsDisplayState extends State<ContactsDisplay> {
           }
           return Center(
               child: Container(
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width * 0.1,
-                  height: MediaQuery
-                      .of(context)
-                      .size
-                      .width * 0.1,
+                  width: MediaQuery.of(context).size.width * 0.1,
+                  height: MediaQuery.of(context).size.width * 0.1,
                   child: CircularProgressIndicator()));
         },
       ),
@@ -118,15 +122,7 @@ class ContactsDisplayState extends State<ContactsDisplay> {
     setState(() {});
   }
 
-  void contactsDetails(context) {
-    showModalBottomSheet(
-        context: context,
-        builder: (BuildContext context) {
-          return ContactsDetails();
-        });
-  }
-
-  Widget popupMenu(name) {
+  Widget popupMenu(user) {
     return PopupMenuButton(
       itemBuilder: (context) {
         var list = List<PopupMenuEntry<Object>>();
@@ -136,9 +132,6 @@ class ContactsDisplayState extends State<ContactsDisplay> {
             child: Text('Update'),
           ),
         );
-//        list.add(
-//          PopupMenuDivider()
-//        );
         list.add(PopupMenuItem(
           value: 2,
           child: Text('Delete'),
@@ -146,31 +139,138 @@ class ContactsDisplayState extends State<ContactsDisplay> {
         return list;
       },
       onSelected: (value) {
-        debugPrint('$value');
-        (value == 1) ? update(name) : delete(name);
+        (value == 1) ? update(user) : delete(user);
       },
       icon: Icon(Icons.more_vert),
     );
   }
 
-  void update(name) {
-    print(name);
-    FirebaseDatabase.instance
-        .reference()
-        .child('area')
-        .child(widget.name)
-        .child(name)
-        .set({'details': '2'});
-    setState(() {});
+  void update(user) {
+    Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (_) =>
+                    UpdateContact(areaName: widget.areaname, user: user)))
+        .then((value) {
+      setState(() {});
+    });
   }
 
-  void delete(name) {
+  void delete(user) {
     FirebaseDatabase.instance
         .reference()
         .child('area')
-        .child(widget.name)
-        .child(name)
+        .child(widget.areaname)
+        .child(user.key)
         .remove();
     setState(() {});
+  }
+}
+
+class UserSearch extends SearchDelegate<User> {
+  String areaName;
+  List<User> listItems = [];
+  final res = FirebaseDatabase.instance.reference().child('area');
+
+  UserSearch({this.areaName});
+
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    return [
+      IconButton(
+        icon: Icon(Icons.clear),
+        onPressed: () {
+          query = '';
+        },
+      )
+    ];
+  }
+
+  @override
+  Widget buildLeading(BuildContext context) {
+    return IconButton(
+      icon: Icon(Icons.arrow_back),
+      onPressed: () {
+        close(context, null);
+      },
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    return FutureBuilder(
+      future: res.child(areaName).once(),
+      builder: (context, AsyncSnapshot<DataSnapshot> snapshot) {
+        if (snapshot.hasData) {
+          listItems.clear();
+          Map<dynamic, dynamic> values = snapshot.data.value;
+          if (values != null) {
+            values.forEach((key, value) {
+              if (value['name'].toLowerCase().contains(query.toLowerCase())) {
+                listItems.add(User(
+                    key: key, name: value['name'], address: value['address']));
+              }
+            });
+          }
+          return ListView.builder(
+            itemCount: listItems.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                title: Text(listItems[index].name),
+                subtitle: Text(listItems[index].address),
+                leading: Icon(Icons.person),
+                onTap: () {
+                  close(context, listItems[index]);
+                },
+              );
+            },
+          );
+        }
+        return Center(
+            child: Container(
+                width: MediaQuery.of(context).size.width * 0.1,
+                height: MediaQuery.of(context).size.width * 0.1,
+                child: CircularProgressIndicator()));
+      },
+    );
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    return FutureBuilder(
+      future: res.child(areaName).once(),
+      builder: (context, AsyncSnapshot<DataSnapshot> snapshot) {
+        if (snapshot.hasData) {
+          listItems.clear();
+          Map<dynamic, dynamic> values = snapshot.data.value;
+          if (values != null) {
+            values.forEach((key, value) {
+              if (value['name'].toLowerCase().contains(query.toLowerCase())) {
+                listItems.add(User(
+                    key: key, name: value['name'], address: value['address']));
+              }
+            });
+          }
+          return ListView.builder(
+            itemCount: listItems.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                title: Text(listItems[index].name),
+                subtitle: Text(listItems[index].address),
+                leading: Icon(Icons.person),
+                onTap: () {
+                  close(context, listItems[index]);
+                },
+              );
+            },
+          );
+        }
+        return Center(
+            child: Container(
+                width: MediaQuery.of(context).size.width * 0.1,
+                height: MediaQuery.of(context).size.width * 0.1,
+                child: CircularProgressIndicator()));
+      },
+    );
   }
 }

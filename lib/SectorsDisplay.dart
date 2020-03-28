@@ -1,9 +1,13 @@
+import 'dart:collection';
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:phone_directory/ContactsDetails.dart';
 import 'package:phone_directory/ContactsDisplay.dart';
 import 'package:phone_directory/NewContact.dart';
 import 'package:phone_directory/UpdateSector.dart';
+import 'package:phone_directory/models/User.dart';
 
 class SectorsDisplay extends StatefulWidget {
   @override
@@ -20,7 +24,10 @@ class SectorsDisplayState extends State<SectorsDisplay> {
           child: Icon(Icons.add),
           onPressed: () {
             Navigator.push(
-                context, MaterialPageRoute(builder: (_) => NewContact()));
+                    context, MaterialPageRoute(builder: (_) => NewContact()))
+                .then((value) {
+              setState(() {});
+            });
           },
         ),
         appBar: AppBar(
@@ -28,14 +35,26 @@ class SectorsDisplayState extends State<SectorsDisplay> {
           title: Text('Jain PhoneBook Directory'),
           actions: <Widget>[
             IconButton(
-              icon: Icon(Icons.refresh),
-              onPressed: () {
-                setState(() {});
+              icon: Icon(Icons.search),
+              onPressed: () async {
+                final User result =
+                    await showSearch(context: context, delegate: UserSearch());
+                if (result != null) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => ContactsDetails(
+                                keys: result.key,
+                                area: result.area,
+                              )));
+                }
               },
             )
           ],
         ),
         body: Container(
+            margin: EdgeInsets.only(top: 10.0),
+            padding: EdgeInsets.all(5.0),
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
             color: Colors.white,
@@ -43,6 +62,7 @@ class SectorsDisplayState extends State<SectorsDisplay> {
   }
 
   Widget getSectorView(context) {
+    Map data={};
     List<String> listItems = [''];
     final response = FirebaseDatabase.instance.reference().child('area');
     return RefreshIndicator(
@@ -53,48 +73,47 @@ class SectorsDisplayState extends State<SectorsDisplay> {
           if (snapshot.hasData) {
             listItems.clear();
             Map<dynamic, dynamic> values = snapshot.data.value;
-            values.forEach((key, value) {
-              listItems.add(key);
-            });
+            if (values != null) {
+              values.forEach((key, value) {
+                if (key.toLowerCase().contains('sector')){
+                  data[key]=int.parse(key.split('-')[1]);
+                }
+                else{
+                  listItems.add(key);
+                }
+              });
+            }
+            var sortedKeys= data.keys.toList(growable:false)
+              ..sort((k1, k2) => data[k1].compareTo(data[k2]));
+            LinkedHashMap sortedData = new LinkedHashMap
+                .fromIterable(sortedKeys, key: (k) => k, value: (k) => data[k]);
+            List sortedDataList=sortedData.keys.toList();
             listItems.sort();
+            sortedDataList.addAll(listItems);
             return ListView.builder(
-                itemCount: listItems.length,
+                itemCount: sortedDataList.length,
                 itemBuilder: (context, index) {
                   return Column(
                     children: <Widget>[
                       ListTile(
                         leading: Icon(Icons.arrow_right),
                         title: Text(
-                          listItems[index],
+                          sortedDataList[index],
                           style: TextStyle(color: Colors.indigo),
                         ),
-//                        onLongPress: () {
-//                          showMenu(
-//                            position: RelativeRect.fromRect(rect, container),
-//                              context: context,
-//                              items: <PopupMenuEntry>[
-//                                PopupMenuItem(
-//                                  child: Text('Update'),
-//                                ),
-//                                PopupMenuItem(
-//                                  child: Text('Delete'),
-//                                ),
-//                              ]
-//                          );
-//                        },
-                        trailing: popupMenu(listItems[index]),
+                        trailing: popupMenu(sortedDataList[index]),
                         onTap: () {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (_) => ContactsDisplay(
-                                        name: listItems[index],
+                                        areaname: sortedDataList[index],
                                       )));
                         },
                       ),
                       Divider(
-                        color: Colors.indigo,
-                        thickness: 1.2,
+                        color: Colors.red,
+                        thickness: 0.7,
                         indent: 15.0,
                         endIndent: 15.0,
                       )
@@ -122,9 +141,6 @@ class SectorsDisplayState extends State<SectorsDisplay> {
             child: Text('Update'),
           ),
         );
-//        list.add(
-//          PopupMenuDivider()
-//        );
         list.add(PopupMenuItem(
           value: 2,
           child: Text('Delete'),
@@ -144,11 +160,138 @@ class SectorsDisplayState extends State<SectorsDisplay> {
 
   void update(area) {
     Navigator.push(context,
-        MaterialPageRoute(builder: (_) => UpdateSector(areaName: area)));
+            MaterialPageRoute(builder: (_) => UpdateSector(areaName: area)))
+        .then((value) {
+      setState(() {});
+    });
   }
 
   void delete(area) {
     FirebaseDatabase.instance.reference().child('area').child(area).remove();
     setState(() {});
+  }
+}
+
+class UserSearch extends SearchDelegate<User> {
+  List<User> listItems = [];
+  final res = FirebaseDatabase.instance.reference().child('area');
+
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    return [
+      IconButton(
+        icon: Icon(Icons.clear),
+        onPressed: () {
+          query = '';
+        },
+      )
+    ];
+  }
+
+  @override
+  Widget buildLeading(BuildContext context) {
+    return IconButton(
+        icon: Icon(Icons.arrow_back),
+        onPressed: () {
+          close(context, null);
+        });
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    return FutureBuilder(
+      future: res.once(),
+      builder: (context, AsyncSnapshot<DataSnapshot> snapshot) {
+        if (snapshot.hasData) {
+          listItems.clear();
+          Map<dynamic, dynamic> values = snapshot.data.value;
+          if (values != null) {
+            values.forEach((key, value) {
+              value.forEach((key1, value1) {
+                if (value1['name']
+                        .toLowerCase()
+                        .contains(query.toLowerCase()) ||
+                    value1['address']
+                        .toLowerCase()
+                        .contains(query.toLowerCase())) {
+                  listItems.add(User(
+                      key: key1,
+                      name: value1['name'],
+                      address: value1['address'],
+                      area: key));
+                }
+              });
+            });
+          }
+          return ListView.builder(
+            itemCount: listItems.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                title: Text(listItems[index].name),
+                subtitle: Text(listItems[index].address),
+                leading: Icon(Icons.person),
+                onTap: () {
+                  close(context, listItems[index]);
+                },
+              );
+            },
+          );
+        }
+        return Center(
+            child: Container(
+                width: MediaQuery.of(context).size.width * 0.1,
+                height: MediaQuery.of(context).size.width * 0.1,
+                child: CircularProgressIndicator()));
+      },
+    );
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    return FutureBuilder(
+      future: res.once(),
+      builder: (context, AsyncSnapshot<DataSnapshot> snapshot) {
+        if (snapshot.hasData) {
+          listItems.clear();
+          Map<dynamic, dynamic> values = snapshot.data.value;
+          if (values != null) {
+            values.forEach((key, value) {
+              value.forEach((key1, value1) {
+                if (value1['name']
+                        .toLowerCase()
+                        .contains(query.toLowerCase()) ||
+                    value1['address']
+                        .toLowerCase()
+                        .contains(query.toLowerCase())) {
+                  listItems.add(User(
+                      key: key1,
+                      name: value1['name'],
+                      address: value1['address'],
+                      area: key));
+                }
+              });
+            });
+          }
+          return ListView.builder(
+            itemCount: listItems.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                title: Text(listItems[index].name),
+                subtitle: Text(listItems[index].address),
+                leading: Icon(Icons.person),
+                onTap: () {
+                  close(context, listItems[index]);
+                },
+              );
+            },
+          );
+        }
+        return Center(
+            child: Container(
+                width: MediaQuery.of(context).size.width * 0.1,
+                height: MediaQuery.of(context).size.width * 0.1,
+                child: CircularProgressIndicator()));
+      },
+    );
   }
 }
