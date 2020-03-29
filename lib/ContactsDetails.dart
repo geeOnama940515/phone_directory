@@ -111,34 +111,34 @@ class ContactsDetailsState extends State<ContactsDetails>{
                 ),
                 ListTile(
                   title: Text(
-                    "Email",
-                    style: TextStyle(color: Colors.deepOrange, fontSize: 12.0),
+                    "Phone",
+                    style: TextStyle(color: Colors.deepOrange, fontSize: 15.0),
                   ),
                   subtitle: Text(
-                    widget.email,
-                    style: TextStyle(fontSize: 18.0),
+                    widget.phone,
+                    style: TextStyle(fontSize: 18.0,color: Colors.black87),
                   ),
                 ),
                 Divider(),
                 ListTile(
                   title: Text(
-                    "Phone",
-                    style: TextStyle(color: Colors.deepOrange, fontSize: 12.0),
+                    "Email",
+                    style: TextStyle(color: Colors.deepOrange, fontSize: 15.0),
                   ),
                   subtitle: Text(
-                    widget.phone,
-                    style: TextStyle(fontSize: 18.0),
+                    widget.email,
+                    style: TextStyle(fontSize: 18.0,color: Colors.black87),
                   ),
                 ),
                 Divider(),
                 ListTile(
                   title: Text(
                     "Address",
-                    style: TextStyle(color: Colors.deepOrange, fontSize: 12.0),
+                    style: TextStyle(color: Colors.deepOrange, fontSize: 15.0),
                   ),
                   subtitle: Text(
                     widget.address,
-                    style: TextStyle(fontSize: 18.0),
+                    style: TextStyle(fontSize: 18.0,color: Colors.black87),
                   ),
                 ),
                 Divider(),

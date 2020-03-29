@@ -1,4 +1,5 @@
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:phone_directory/UpdateContact.dart';
 import 'package:phone_directory/models/User.dart';
@@ -76,13 +77,14 @@ class ContactsDisplayState extends State<ContactsDisplay> {
                     address: value['address']));
               });
             }
+            listItems.sort((a,b)=> a.name.compareTo(b.name));
             return ListView.builder(
                 itemCount: listItems.length == 0 ? 0 : listItems.length,
                 itemBuilder: (context, index) {
                   return Column(
                     children: <Widget>[
                       ListTile(
-                        leading: Icon(Icons.arrow_right),
+                        leading: Icon(Icons.person),
                         title: Text(
                           listItems[index].name,
                           style: TextStyle(color: Colors.indigo),
