@@ -1,5 +1,5 @@
 import "package:flutter/material.dart";
-import 'package:phone_directory/SectorsDisplay.dart';
+import 'package:phone_directory/HomeScreen.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -9,6 +9,6 @@ void main() {
       //canvasColor: Colors.transparent,
       primaryColor: Colors.red,
     ),
-    home: SectorsDisplay(),
+    home: HomeScreen(),
   ));
 }

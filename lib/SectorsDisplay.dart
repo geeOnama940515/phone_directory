@@ -5,9 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:phone_directory/ContactsDetails.dart';
 import 'package:phone_directory/ContactsDisplay.dart';
-import 'package:phone_directory/ExecutiveBoard.dart';
 import 'package:phone_directory/NewContact.dart';
-import 'package:phone_directory/Patrons.dart';
 import 'package:phone_directory/UpdateSector.dart';
 import 'package:phone_directory/models/User.dart';
 
@@ -22,42 +20,6 @@ class SectorsDisplayState extends State<SectorsDisplay> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        drawer: Drawer(
-          child: ListView(
-            children: <Widget>[
-              Container(
-                color: Colors.white,
-                height: MediaQuery.of(context).size.height*0.3,
-                child: Image(
-                  image: AssetImage('assets/logo.jpg'),
-                ),
-              ),
-              ListTile(
-                title: Text('PhoneBook'),
-                leading: Icon(Icons.call),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
-                title: Text('Executie Board Members'),
-                leading: Icon(Icons.person),
-                onTap: () {
-                  Navigator.pop(context);
-                  Navigator.push(context, MaterialPageRoute(builder: (_)=> ExecutiveBoard()));
-                },
-              ),
-              ListTile(
-                title: Text('Patrons'),
-                leading: Icon(Icons.person),
-                onTap: () {
-                  Navigator.pop(context);
-                  Navigator.push(context, MaterialPageRoute(builder: (_)=> Patrons()));
-                },
-              )
-            ],
-          ),
-        ),
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           onPressed: () {
