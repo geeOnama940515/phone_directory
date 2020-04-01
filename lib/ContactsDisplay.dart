@@ -6,9 +6,9 @@ import 'package:phone_directory/models/User.dart';
 import 'ContactsDetails.dart';
 
 class ContactsDisplay extends StatefulWidget {
-  final String areaname;
+  final String areaname, part;
 
-  ContactsDisplay({this.areaname});
+  ContactsDisplay({this.areaname, this.part});
 
   @override
   State<StatefulWidget> createState() {
@@ -29,12 +29,14 @@ class ContactsDisplayState extends State<ContactsDisplay> {
             onPressed: () async {
               final User user = await showSearch(
                   context: context,
-                  delegate: UserSearch(areaName: widget.areaname));
+                  delegate:
+                      UserSearch(areaName: widget.areaname, part: widget.part));
               if (user != null) {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (_) => ContactsDetails(
+                              part: widget.part,
                               area: widget.areaname,
                               keys: user.key,
                             )));
@@ -56,7 +58,7 @@ class ContactsDisplayState extends State<ContactsDisplay> {
     //List<String> listKeys=[''];
     final response = FirebaseDatabase.instance
         .reference()
-        .child('area')
+        .child('area${widget.part}')
         .child(widget.areaname);
     return RefreshIndicator(
       onRefresh: onRefresh,
@@ -77,7 +79,7 @@ class ContactsDisplayState extends State<ContactsDisplay> {
                     address: value['address']));
               });
             }
-            listItems.sort((a,b)=> a.name.compareTo(b.name));
+            listItems.sort((a, b) => a.name.compareTo(b.name));
             return ListView.builder(
                 itemCount: listItems.length == 0 ? 0 : listItems.length,
                 itemBuilder: (context, index) {
@@ -95,6 +97,7 @@ class ContactsDisplayState extends State<ContactsDisplay> {
                               context,
                               MaterialPageRoute(
                                   builder: (_) => ContactsDetails(
+                                        part: widget.part,
                                         area: widget.areaname,
                                         keys: listItems[index].key,
                                       )));
@@ -149,11 +152,13 @@ class ContactsDisplayState extends State<ContactsDisplay> {
 
   void update(user) {
     Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (_) =>
-                    UpdateContact(areaName: widget.areaname, user: user)))
-        .then((value) {
+        context,
+        MaterialPageRoute(
+            builder: (_) => UpdateContact(
+                  areaName: widget.areaname,
+                  user: user,
+                  part: widget.part,
+                ))).then((value) {
       setState(() {});
     });
   }
@@ -161,7 +166,7 @@ class ContactsDisplayState extends State<ContactsDisplay> {
   void delete(user) {
     FirebaseDatabase.instance
         .reference()
-        .child('area')
+        .child('area${widget.part}')
         .child(widget.areaname)
         .child(user.key)
         .remove();
@@ -170,11 +175,11 @@ class ContactsDisplayState extends State<ContactsDisplay> {
 }
 
 class UserSearch extends SearchDelegate<User> {
-  String areaName;
+  String areaName, part;
   List<User> listItems = [];
-  final res = FirebaseDatabase.instance.reference().child('area');
+  final res = FirebaseDatabase.instance.reference();
 
-  UserSearch({this.areaName});
+  UserSearch({this.areaName, this.part});
 
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -201,7 +206,7 @@ class UserSearch extends SearchDelegate<User> {
   @override
   Widget buildResults(BuildContext context) {
     return FutureBuilder(
-      future: res.child(areaName).once(),
+      future: res.child('area$part').child(areaName).once(),
       builder: (context, AsyncSnapshot<DataSnapshot> snapshot) {
         if (snapshot.hasData) {
           listItems.clear();
@@ -240,7 +245,7 @@ class UserSearch extends SearchDelegate<User> {
   @override
   Widget buildSuggestions(BuildContext context) {
     return FutureBuilder(
-      future: res.child(areaName).once(),
+      future: res.child('area$part').child(areaName).once(),
       builder: (context, AsyncSnapshot<DataSnapshot> snapshot) {
         if (snapshot.hasData) {
           listItems.clear();

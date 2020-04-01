@@ -3,9 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class UpdateSector extends StatefulWidget {
-  String areaName;
+  String areaName,part;
 
-  UpdateSector({this.areaName});
+  UpdateSector({this.areaName,this.part});
 
   @override
   State<StatefulWidget> createState() {
@@ -30,19 +30,19 @@ class UpdateSectorState extends State<UpdateSector> {
         onPressed: () {
           FirebaseDatabase.instance
               .reference()
-              .child('area')
+              .child('area${widget.part}')
               .child(widget.areaName)
               .once()
               .then((DataSnapshot snapshot) {
             var data = snapshot.value;
             FirebaseDatabase.instance
                 .reference()
-                .child('area')
+                .child('area${widget.part}')
                 .child(newAreaName)
                 .set(data);
             FirebaseDatabase.instance
                 .reference()
-                .child('area')
+                .child('area${widget.part}')
                 .child(widget.areaName)
                 .remove();
           });

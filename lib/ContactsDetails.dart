@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 
 class ContactsDetails extends StatefulWidget{
 
-  String area,keys,name,phone,address,email;
+  String area,keys,name,phone,address,email,part;
 
-  ContactsDetails({this.area, this.keys});
+  ContactsDetails({this.area, this.keys,this.part});
 
   @override
   State<StatefulWidget> createState() {

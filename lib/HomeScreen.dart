@@ -29,15 +29,7 @@ class HomeScreen extends StatelessWidget {
               },
             ),
             Divider(),
-            ListTile(
-              title: Text('PhoneBook'),
-              leading: Icon(Icons.call),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.push(context, MaterialPageRoute(builder: (_)=>SectorsDisplay()));
-              },
-            ),
-            Divider(),
+
             ListTile(
               title: Text('Executie Board Members'),
               leading: Icon(Icons.person),
@@ -53,6 +45,24 @@ class HomeScreen extends StatelessWidget {
               onTap: () {
                 Navigator.pop(context);
                 Navigator.push(context, MaterialPageRoute(builder: (_)=> Patrons()));
+              },
+            ),
+            Divider(),
+            ListTile(
+              title: Text('PhoneBook(M)'),
+              leading: Icon(Icons.call),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(context, MaterialPageRoute(builder: (_)=>SectorsDisplay(part: '1',)));
+              },
+            ),
+            Divider(),
+            ListTile(
+              title: Text('PhoneBook(F)'),
+              leading: Icon(Icons.call),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(context, MaterialPageRoute(builder: (_)=>SectorsDisplay(part: '2',)));
               },
             ),
             Divider(),
@@ -105,26 +115,7 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 20.0,),
-            Container(
-              width: MediaQuery.of(context).size.width*0.7,
-              child: MaterialButton(
-                onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_)=> SectorsDisplay()));
-                },
-                height: MediaQuery.of(context).size.height*0.065,
-                color: Color(0xffb21f66),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.0)),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Icon(Icons.phone,color: Colors.white,),
-                    SizedBox(width: 25.0,),
-                    Expanded(child: Text('Phonebook',style: TextStyle(fontSize: 20.0,color: Colors.white),))
-                  ],
-                ),
-              ),
-            ),
+
             SizedBox(height: 20.0,),
             Container(
               width: MediaQuery.of(context).size.width*0.7,
@@ -164,7 +155,47 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
               ),
-            )
+            ),
+            SizedBox(height: 20.0,),
+            Container(
+              width: MediaQuery.of(context).size.width*0.7,
+              child: MaterialButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (_)=> SectorsDisplay(part: '1',)));
+                },
+                height: MediaQuery.of(context).size.height*0.065,
+                color: Color(0xffb21f66),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.0)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Icon(Icons.phone,color: Colors.white,),
+                    SizedBox(width: 25.0,),
+                    Expanded(child: Text('Phonebook(M)',style: TextStyle(fontSize: 20.0,color: Colors.white),))
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: 20.0,),
+            Container(
+              width: MediaQuery.of(context).size.width*0.7,
+              child: MaterialButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (_)=> SectorsDisplay(part: '2')));
+                },
+                height: MediaQuery.of(context).size.height*0.065,
+                color: Color(0xffb21f66),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.0)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Icon(Icons.phone,color: Colors.white,),
+                    SizedBox(width: 25.0,),
+                    Expanded(child: Text('Phonebook(F)',style: TextStyle(fontSize: 20.0,color: Colors.white),))
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),

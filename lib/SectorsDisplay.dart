@@ -1,5 +1,4 @@
 import 'dart:collection';
-
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -10,6 +9,10 @@ import 'package:phone_directory/UpdateSector.dart';
 import 'package:phone_directory/models/User.dart';
 
 class SectorsDisplay extends StatefulWidget {
+  String part;
+
+  SectorsDisplay({this.part});
+
   @override
   State<StatefulWidget> createState() {
     return SectorsDisplayState();
@@ -24,7 +27,7 @@ class SectorsDisplayState extends State<SectorsDisplay> {
           child: Icon(Icons.add),
           onPressed: () {
             Navigator.push(
-                    context, MaterialPageRoute(builder: (_) => NewContact()))
+                    context, MaterialPageRoute(builder: (_) => NewContact(part: widget.part,)))
                 .then((value) {
               setState(() {});
             });
@@ -37,13 +40,14 @@ class SectorsDisplayState extends State<SectorsDisplay> {
             IconButton(
               icon: Icon(Icons.search),
               onPressed: () async {
-                final User result =
-                    await showSearch(context: context, delegate: UserSearch());
+                final User result = await showSearch(
+                    context: context, delegate: UserSearch(part: widget.part));
                 if (result != null) {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (_) => ContactsDetails(
+                                part: widget.part,
                                 keys: result.key,
                                 area: result.area,
                               )));
@@ -64,7 +68,8 @@ class SectorsDisplayState extends State<SectorsDisplay> {
   Widget getSectorView(context) {
     Map data = {};
     List<String> listItems = [''];
-    final response = FirebaseDatabase.instance.reference().child('area');
+    final response =
+        FirebaseDatabase.instance.reference().child('area${widget.part}');
     return RefreshIndicator(
       onRefresh: onRefresh,
       child: FutureBuilder(
@@ -109,6 +114,7 @@ class SectorsDisplayState extends State<SectorsDisplay> {
                               MaterialPageRoute(
                                   builder: (_) => ContactsDisplay(
                                         areaname: sortedDataList[index],
+                                        part: widget.part,
                                       )));
                         },
                       ),
@@ -160,22 +166,33 @@ class SectorsDisplayState extends State<SectorsDisplay> {
   }
 
   void update(area) {
-    Navigator.push(context,
-            MaterialPageRoute(builder: (_) => UpdateSector(areaName: area)))
-        .then((value) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (_) => UpdateSector(
+                  areaName: area,
+                  part: widget.part,
+                ))).then((value) {
       setState(() {});
     });
   }
 
   void delete(area) {
-    FirebaseDatabase.instance.reference().child('area').child(area).remove();
+    FirebaseDatabase.instance
+        .reference()
+        .child('area${widget.part}')
+        .child(area)
+        .remove();
     setState(() {});
   }
 }
 
 class UserSearch extends SearchDelegate<User> {
+  String part;
   List<User> listItems = [];
-  final res = FirebaseDatabase.instance.reference().child('area');
+  final res = FirebaseDatabase.instance.reference();
+
+  UserSearch({this.part});
 
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -201,7 +218,7 @@ class UserSearch extends SearchDelegate<User> {
   @override
   Widget buildResults(BuildContext context) {
     return FutureBuilder(
-      future: res.once(),
+      future: res.child('area$part').once(),
       builder: (context, AsyncSnapshot<DataSnapshot> snapshot) {
         if (snapshot.hasData) {
           listItems.clear();
@@ -250,7 +267,7 @@ class UserSearch extends SearchDelegate<User> {
   @override
   Widget buildSuggestions(BuildContext context) {
     return FutureBuilder(
-      future: res.once(),
+      future: res.child('area$part').once(),
       builder: (context, AsyncSnapshot<DataSnapshot> snapshot) {
         if (snapshot.hasData) {
           listItems.clear();
