@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -55,37 +54,6 @@ class UpdateExecutiveBoardState extends State<UpdateExecutiveBoard> {
             'address': address,
             'designation': designation
           });
-//          if (designation == widget.user.designation) {
-//            FirebaseDatabase.instance
-//                .reference()
-//                .child('area')
-//                .child(widget.areaName)
-//                .child(widget.user.key)
-//                .set({
-//              'name': name,
-//              'phone': phone,
-//              'email': email,
-//              'address': address
-//            });
-//          } else {
-//            FirebaseDatabase.instance
-//                .reference()
-//                .child('area')
-//                .child(area)
-//                .push()
-//                .set({
-//              'name': name,
-//              'phone': phone,
-//              'email': email,
-//              'address': address
-//            });
-//            FirebaseDatabase.instance
-//                .reference()
-//                .child('area')
-//                .child(widget.areaName)
-//                .child(widget.user.key)
-//                .remove();
-//          }
           Navigator.pop(context, true);
         },
         child: Icon(
@@ -95,7 +63,7 @@ class UpdateExecutiveBoardState extends State<UpdateExecutiveBoard> {
         backgroundColor: Colors.red,
       ),
       appBar: AppBar(
-        title: Text("Update Executive Board Member Details"),
+        title: Text("Update Executive Member Details"),
         backgroundColor: Colors.red,
         elevation: 0,
       ),
@@ -214,36 +182,6 @@ class UpdateExecutiveBoardState extends State<UpdateExecutiveBoard> {
                           bottomRight: Radius.circular(25.0)))),
             ),
           ),
-//          Padding(
-//            padding: EdgeInsets.only(top: 15.0, left: 12.0, right: 12.0),
-//            child: TextFormField(
-//              onChanged: (value) {
-//                email = value;
-//              },
-//              keyboardType: TextInputType.emailAddress,
-//              controller: emailController,
-//              decoration: InputDecoration(
-//                  prefixIcon: Icon(
-//                    Icons.email,
-//                    color: Colors.red,
-//                  ),
-//                  enabledBorder: OutlineInputBorder(
-//                      borderSide:
-//                          BorderSide(color: Colors.redAccent, width: 2.0),
-//                      borderRadius: BorderRadius.only(
-//                          topLeft: Radius.circular(25.0),
-//                          bottomRight: Radius.circular(25.0))),
-//                  hintText: "Enter New E-mail",
-//                  hintStyle: TextStyle(fontSize: 20.0),
-//                  labelStyle:
-//                      TextStyle(fontSize: 20.0, fontWeight: FontWeight.w500),
-//                  labelText: "E-mail",
-//                  border: OutlineInputBorder(
-//                      borderRadius: BorderRadius.only(
-//                          topLeft: Radius.circular(25.0),
-//                          bottomRight: Radius.circular(25.0)))),
-//            ),
-//          ),
           Padding(
             padding: EdgeInsets.only(top: 15.0, left: 12.0, right: 12.0),
             child: TextFormField(

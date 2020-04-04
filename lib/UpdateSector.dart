@@ -3,9 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class UpdateSector extends StatefulWidget {
-  String areaName,part;
+  String areaName, part;
 
-  UpdateSector({this.areaName,this.part});
+  UpdateSector({this.areaName, this.part});
 
   @override
   State<StatefulWidget> createState() {
@@ -46,7 +46,7 @@ class UpdateSectorState extends State<UpdateSector> {
                 .child(widget.areaName)
                 .remove();
           });
-          Navigator.pop(context,true);
+          Navigator.pop(context, true);
         },
         child: Icon(
           Icons.keyboard_arrow_right,

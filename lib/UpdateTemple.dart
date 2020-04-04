@@ -2,8 +2,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:phone_directory/models/Temple.dart';
 
-class UpdateTemple extends StatefulWidget{
-
+class UpdateTemple extends StatefulWidget {
   Temple temple;
 
   UpdateTemple({this.temple});
@@ -14,8 +13,7 @@ class UpdateTemple extends StatefulWidget{
   }
 }
 
-class UpdateTempleState extends State<UpdateTemple>{
-
+class UpdateTempleState extends State<UpdateTemple> {
   String name, area, address;
   int priority;
 
@@ -35,7 +33,8 @@ class UpdateTempleState extends State<UpdateTemple>{
 
     nameController = TextEditingController(text: widget.temple.name);
     areaController = TextEditingController(text: widget.temple.area);
-    priorityController = TextEditingController(text: (widget.temple.priority).toString());
+    priorityController =
+        TextEditingController(text: (widget.temple.priority).toString());
     addressController = TextEditingController(text: widget.temple.address);
   }
 
@@ -107,14 +106,14 @@ class UpdateTempleState extends State<UpdateTemple>{
                   ),
                   enabledBorder: OutlineInputBorder(
                       borderSide:
-                      BorderSide(color: Colors.redAccent, width: 2.0),
+                          BorderSide(color: Colors.redAccent, width: 2.0),
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(25.0),
                           bottomRight: Radius.circular(25.0))),
                   hintText: "Enter New Name",
                   hintStyle: TextStyle(fontSize: 20.0),
                   labelStyle:
-                  TextStyle(fontSize: 20.0, fontWeight: FontWeight.w500),
+                      TextStyle(fontSize: 20.0, fontWeight: FontWeight.w500),
                   labelText: "Name",
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.only(
@@ -143,7 +142,7 @@ class UpdateTempleState extends State<UpdateTemple>{
                 hintText: "Enter New Area",
                 hintStyle: TextStyle(fontSize: 20.0),
                 labelStyle:
-                TextStyle(fontSize: 20.0, fontWeight: FontWeight.w500),
+                    TextStyle(fontSize: 20.0, fontWeight: FontWeight.w500),
                 labelText: "Area",
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.only(
@@ -173,7 +172,7 @@ class UpdateTempleState extends State<UpdateTemple>{
                 hintText: "Enter Priority",
                 hintStyle: TextStyle(fontSize: 20.0),
                 labelStyle:
-                TextStyle(fontSize: 20.0, fontWeight: FontWeight.w500),
+                    TextStyle(fontSize: 20.0, fontWeight: FontWeight.w500),
                 labelText: "priority",
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.only(
@@ -198,14 +197,14 @@ class UpdateTempleState extends State<UpdateTemple>{
                   ),
                   enabledBorder: OutlineInputBorder(
                       borderSide:
-                      BorderSide(color: Colors.redAccent, width: 2.0),
+                          BorderSide(color: Colors.redAccent, width: 2.0),
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(25.0),
                           bottomRight: Radius.circular(25.0))),
                   hintText: "Enter New Address",
                   hintStyle: TextStyle(fontSize: 20.0),
                   labelStyle:
-                  TextStyle(fontSize: 20.0, fontWeight: FontWeight.w500),
+                      TextStyle(fontSize: 20.0, fontWeight: FontWeight.w500),
                   labelText: "Address",
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.only(

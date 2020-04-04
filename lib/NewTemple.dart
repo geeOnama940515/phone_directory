@@ -9,8 +9,7 @@ class NewTemple extends StatefulWidget {
 }
 
 class NewTempleState extends State<NewTemple> {
-
-  String name,address,area;
+  String name, address, area;
   int priority;
 
   TextEditingController areaController = TextEditingController();
@@ -27,7 +26,7 @@ class NewTempleState extends State<NewTemple> {
             'name': name,
             'address': address,
             'priority': priority,
-            'area':area
+            'area': area
           });
           Navigator.pop(context, true);
         },
@@ -173,14 +172,14 @@ class NewTempleState extends State<NewTemple> {
                   ),
                   enabledBorder: OutlineInputBorder(
                       borderSide:
-                      BorderSide(color: Colors.redAccent, width: 2.0),
+                          BorderSide(color: Colors.redAccent, width: 2.0),
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(25.0),
                           bottomRight: Radius.circular(25.0))),
                   hintText: "Enter Priority",
                   hintStyle: TextStyle(fontSize: 20.0),
                   labelStyle:
-                  TextStyle(fontSize: 20.0, fontWeight: FontWeight.w500),
+                      TextStyle(fontSize: 20.0, fontWeight: FontWeight.w500),
                   labelText: "Priority",
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.only(

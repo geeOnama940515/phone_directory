@@ -1,10 +1,20 @@
 import 'package:flutter/material.dart';
 
 class User {
-  String designation, key, name, phone, email, address, area, since, relation;
+  String designation,
+      key,
+      name,
+      phone,
+      email,
+      address,
+      area,
+      since,
+      relation,
+      priority;
 
   User(
       {this.key,
+      this.priority,
       this.name,
       this.phone,
       this.email,

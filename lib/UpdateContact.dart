@@ -1,15 +1,14 @@
 import 'dart:ui';
-
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:phone_directory/models/User.dart';
 
 class UpdateContact extends StatefulWidget {
-  String areaName,part;
+  String areaName, part;
   User user;
 
-  UpdateContact({this.areaName, this.user,this.part});
+  UpdateContact({this.areaName, this.user, this.part});
 
   @override
   State<StatefulWidget> createState() {
@@ -72,9 +71,14 @@ class UpdateContactState extends State<UpdateContact> {
               'email': email,
               'address': address
             });
-            FirebaseDatabase.instance.reference().child('area${widget.part}').child(widget.areaName).child(widget.user.key).remove();
+            FirebaseDatabase.instance
+                .reference()
+                .child('area${widget.part}')
+                .child(widget.areaName)
+                .child(widget.user.key)
+                .remove();
           }
-          Navigator.pop(context,true);
+          Navigator.pop(context, true);
         },
         child: Icon(
           Icons.keyboard_arrow_right,

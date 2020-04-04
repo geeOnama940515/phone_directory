@@ -1,6 +1,5 @@
 import 'dart:ui';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 import 'models/User.dart';
@@ -22,7 +21,6 @@ class ExecutiveBoardDetailsState extends State<ExecutiveBoardDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        // backgroundColor: Colors.deepOrange,
         appBar: AppBar(
           title: Text("Contact Details"),
           backgroundColor: Colors.red,
@@ -54,7 +52,7 @@ class ExecutiveBoardDetailsState extends State<ExecutiveBoardDetails> {
                           onPressed: () {
                             setState(() {
                               _launched =
-                                  _makePhoneCall('tel:${widget.user.phone}');
+                                  _makePhoneCall('tel:${widget.user.phone..split(',')[0]}');
                             });
                           },
                           color: Colors.deepOrange.shade100,
@@ -79,7 +77,7 @@ class ExecutiveBoardDetailsState extends State<ExecutiveBoardDetails> {
                           onPressed: () {
                             setState(() {
                               _launched =
-                                  _makePhoneCall('sms:${widget.user.phone}');
+                                  _makePhoneCall('sms:${widget.user.phone.split(',')[0]}');
                             });
                           },
                           color: Colors.deepOrange.shade100,
@@ -111,6 +109,12 @@ class ExecutiveBoardDetailsState extends State<ExecutiveBoardDetails> {
             ),
             Divider(),
             ListTile(
+              onTap: () {
+                setState(() {
+                  _launched =
+                      _makePhoneCall('tel:${widget.user.phone.split(',')[0]}');
+                });
+              },
               title: Text(
                 "Phone",
                 style: TextStyle(color: Colors.deepOrange, fontSize: 15.0),
@@ -121,17 +125,6 @@ class ExecutiveBoardDetailsState extends State<ExecutiveBoardDetails> {
               ),
             ),
             Divider(),
-//                  ListTile(
-//                    title: Text(
-//                      "Email",
-//                      style: TextStyle(color: Colors.deepOrange, fontSize: 15.0),
-//                    ),
-//                    subtitle: Text(
-//                      widget.email,
-//                      style: TextStyle(fontSize: 18.0,color: Colors.black87),
-//                    ),
-//                  ),
-//                  Divider(),
             ListTile(
               title: Text(
                 "Address",

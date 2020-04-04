@@ -1,5 +1,4 @@
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:phone_directory/UpdateContact.dart';
 import 'package:phone_directory/models/User.dart';
@@ -54,8 +53,6 @@ class ContactsDisplayState extends State<ContactsDisplay> {
 
   Widget getContactsView(context) {
     List<User> listItems = [];
-    //List<String> listItems = [''];
-    //List<String> listKeys=[''];
     final response = FirebaseDatabase.instance
         .reference()
         .child('area${widget.part}')
@@ -67,7 +64,6 @@ class ContactsDisplayState extends State<ContactsDisplay> {
         builder: (context, AsyncSnapshot<DataSnapshot> snapshot) {
           if (snapshot.hasData) {
             listItems.clear();
-            //listKeys.clear();
             Map<dynamic, dynamic> values = snapshot.data.value;
             if (values != null) {
               values.forEach((key, value) {
@@ -91,7 +87,7 @@ class ContactsDisplayState extends State<ContactsDisplay> {
                           listItems[index].name,
                           style: TextStyle(color: Colors.indigo),
                         ),
-                        trailing: popupMenu(listItems[index]),
+//                        trailing: popupMenu(listItems[index]),
                         onTap: () {
                           Navigator.push(
                               context,
@@ -127,51 +123,51 @@ class ContactsDisplayState extends State<ContactsDisplay> {
     setState(() {});
   }
 
-  Widget popupMenu(user) {
-    return PopupMenuButton(
-      itemBuilder: (context) {
-        var list = List<PopupMenuEntry<Object>>();
-        list.add(
-          PopupMenuItem(
-            value: 1,
-            child: Text('Update'),
-          ),
-        );
-        list.add(PopupMenuItem(
-          value: 2,
-          child: Text('Delete'),
-        ));
-        return list;
-      },
-      onSelected: (value) {
-        (value == 1) ? update(user) : delete(user);
-      },
-      icon: Icon(Icons.more_vert),
-    );
-  }
-
-  void update(user) {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (_) => UpdateContact(
-                  areaName: widget.areaname,
-                  user: user,
-                  part: widget.part,
-                ))).then((value) {
-      setState(() {});
-    });
-  }
-
-  void delete(user) {
-    FirebaseDatabase.instance
-        .reference()
-        .child('area${widget.part}')
-        .child(widget.areaname)
-        .child(user.key)
-        .remove();
-    setState(() {});
-  }
+//  Widget popupMenu(user) {
+//    return PopupMenuButton(
+//      itemBuilder: (context) {
+//        var list = List<PopupMenuEntry<Object>>();
+//        list.add(
+//          PopupMenuItem(
+//            value: 1,
+//            child: Text('Update'),
+//          ),
+//        );
+//        list.add(PopupMenuItem(
+//          value: 2,
+//          child: Text('Delete'),
+//        ));
+//        return list;
+//      },
+//      onSelected: (value) {
+//        (value == 1) ? update(user) : delete(user);
+//      },
+//      icon: Icon(Icons.more_vert),
+//    );
+//  }
+//
+//  void update(user) {
+//    Navigator.push(
+//        context,
+//        MaterialPageRoute(
+//            builder: (_) => UpdateContact(
+//                  areaName: widget.areaname,
+//                  user: user,
+//                  part: widget.part,
+//                ))).then((value) {
+//      setState(() {});
+//    });
+//  }
+//
+//  void delete(user) {
+//    FirebaseDatabase.instance
+//        .reference()
+//        .child('area${widget.part}')
+//        .child(widget.areaname)
+//        .child(user.key)
+//        .remove();
+//    setState(() {});
+//  }
 }
 
 class UserSearch extends SearchDelegate<User> {

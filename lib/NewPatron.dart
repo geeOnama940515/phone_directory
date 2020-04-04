@@ -1,16 +1,15 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
-class NewPatron extends StatefulWidget{
+class NewPatron extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     return NewPatronState();
   }
 }
 
-class NewPatronState extends State<NewPatron>{
-
-  String name,phone,address,relation,since;
+class NewPatronState extends State<NewPatron> {
+  String name, phone, address, relation, since;
 
   TextEditingController relationController = TextEditingController();
   TextEditingController nameController = TextEditingController();
@@ -23,10 +22,19 @@ class NewPatronState extends State<NewPatron>{
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          FirebaseDatabase.instance.reference().child('patrons').push().set({'name':name,'phone':phone,'address':address,'relation':relation,'since':since});
-          Navigator.pop(context,true);
+          FirebaseDatabase.instance.reference().child('patrons').push().set({
+            'name': name,
+            'phone': phone,
+            'address': address,
+            'relation': relation,
+            'since': since
+          });
+          Navigator.pop(context, true);
         },
-        child: Icon(Icons.keyboard_arrow_right,size: 40.0,),
+        child: Icon(
+          Icons.keyboard_arrow_right,
+          size: 40.0,
+        ),
         backgroundColor: Colors.red,
       ),
       appBar: AppBar(
@@ -65,20 +73,23 @@ class NewPatronState extends State<NewPatron>{
               keyboardType: TextInputType.text,
               controller: nameController,
               onChanged: (value) {
-                name=value;
+                name = value;
               },
               decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.person,color: Colors.red,),
+                  prefixIcon: Icon(
+                    Icons.person,
+                    color: Colors.red,
+                  ),
                   enabledBorder: OutlineInputBorder(
                       borderSide:
-                      BorderSide(color: Colors.redAccent, width: 2.0),
+                          BorderSide(color: Colors.redAccent, width: 2.0),
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(25.0),
                           bottomRight: Radius.circular(25.0))),
                   hintText: "Enter Name",
                   hintStyle: TextStyle(fontSize: 20.0),
                   labelStyle:
-                  TextStyle(fontSize: 20.0,fontWeight: FontWeight.w500),
+                      TextStyle(fontSize: 20.0, fontWeight: FontWeight.w500),
                   labelText: "Name",
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.only(
@@ -90,20 +101,24 @@ class NewPatronState extends State<NewPatron>{
             padding: EdgeInsets.only(top: 15.0, left: 12.0, right: 12.0),
             child: TextFormField(
               onChanged: (value) {
-                since=value;
+                since = value;
               },
               keyboardType: TextInputType.text,
               controller: sinceController,
               decoration: InputDecoration(
-                prefixIcon: Icon(Icons.location_on,color: Colors.red,),
+                prefixIcon: Icon(
+                  Icons.location_on,
+                  color: Colors.red,
+                ),
                 enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.redAccent,width: 2.0),
+                    borderSide: BorderSide(color: Colors.redAccent, width: 2.0),
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(25.0),
                         bottomRight: Radius.circular(25.0))),
                 hintText: "Enter Joining Year",
                 hintStyle: TextStyle(fontSize: 20.0),
-                labelStyle: TextStyle(fontSize: 20.0,fontWeight: FontWeight.w500),
+                labelStyle:
+                    TextStyle(fontSize: 20.0, fontWeight: FontWeight.w500),
                 labelText: "Since",
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.only(
@@ -116,20 +131,24 @@ class NewPatronState extends State<NewPatron>{
             padding: EdgeInsets.only(top: 15.0, left: 12.0, right: 12.0),
             child: TextFormField(
               onChanged: (value) {
-                relation=value;
+                relation = value;
               },
               keyboardType: TextInputType.text,
               controller: relationController,
               decoration: InputDecoration(
-                prefixIcon: Icon(Icons.location_on,color: Colors.red,),
+                prefixIcon: Icon(
+                  Icons.location_on,
+                  color: Colors.red,
+                ),
                 enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.redAccent,width: 2.0),
+                    borderSide: BorderSide(color: Colors.redAccent, width: 2.0),
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(25.0),
                         bottomRight: Radius.circular(25.0))),
                 hintText: "Enter Relation (Father/Mother/Husband)",
                 hintStyle: TextStyle(fontSize: 20.0),
-                labelStyle: TextStyle(fontSize: 20.0,fontWeight: FontWeight.w500),
+                labelStyle:
+                    TextStyle(fontSize: 20.0, fontWeight: FontWeight.w500),
                 labelText: "Relation",
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.only(
@@ -142,22 +161,25 @@ class NewPatronState extends State<NewPatron>{
             padding: EdgeInsets.only(top: 15.0, left: 12.0, right: 12.0),
             child: TextFormField(
               onChanged: (value) {
-                phone=value;
+                phone = value;
               },
               keyboardType: TextInputType.number,
               controller: phoneController,
               decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.phone,color: Colors.red,),
+                  prefixIcon: Icon(
+                    Icons.phone,
+                    color: Colors.red,
+                  ),
                   enabledBorder: OutlineInputBorder(
                       borderSide:
-                      BorderSide(color: Colors.redAccent,width: 2.0),
+                          BorderSide(color: Colors.redAccent, width: 2.0),
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(25.0),
                           bottomRight: Radius.circular(25.0))),
                   hintText: "Enter Phone Number",
                   hintStyle: TextStyle(fontSize: 20.0),
                   labelStyle:
-                  TextStyle(fontSize: 20.0,fontWeight: FontWeight.w500),
+                      TextStyle(fontSize: 20.0, fontWeight: FontWeight.w500),
                   labelText: "Phone Number",
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.only(
@@ -165,54 +187,30 @@ class NewPatronState extends State<NewPatron>{
                           bottomRight: Radius.circular(25.0)))),
             ),
           ),
-//          Padding(
-//            padding: EdgeInsets.only(top: 15.0, left: 12.0, right: 12.0),
-//            child: TextFormField(
-//              onChanged: (value) {
-//                email=value;
-//              },
-//              keyboardType: TextInputType.emailAddress,
-//              controller: emailController,
-//              decoration: InputDecoration(
-//                  prefixIcon: Icon(Icons.email,color: Colors.red,),
-//                  enabledBorder: OutlineInputBorder(
-//                      borderSide:
-//                      BorderSide(color: Colors.redAccent, width: 2.0),
-//                      borderRadius: BorderRadius.only(
-//                          topLeft: Radius.circular(25.0),
-//                          bottomRight: Radius.circular(25.0))),
-//                  hintText: "Enter E-mail",
-//                  hintStyle: TextStyle(fontSize: 20.0),
-//                  labelStyle:
-//                  TextStyle(fontSize: 20.0,fontWeight: FontWeight.w500),
-//                  labelText: "E-mail",
-//                  border: OutlineInputBorder(
-//                      borderRadius: BorderRadius.only(
-//                          topLeft: Radius.circular(25.0),
-//                          bottomRight: Radius.circular(25.0)))),
-//            ),
-//          ),
           Padding(
             padding: EdgeInsets.only(top: 15.0, left: 12.0, right: 12.0),
             child: TextFormField(
               onChanged: (value) {
-                address=value;
+                address = value;
               },
               keyboardType: TextInputType.multiline,
               maxLines: null,
               controller: addressController,
               decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.home,color: Colors.red,),
+                  prefixIcon: Icon(
+                    Icons.home,
+                    color: Colors.red,
+                  ),
                   enabledBorder: OutlineInputBorder(
                       borderSide:
-                      BorderSide(color: Colors.redAccent, width: 2.0),
+                          BorderSide(color: Colors.redAccent, width: 2.0),
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(25.0),
                           bottomRight: Radius.circular(25.0))),
                   hintText: "Enter Address",
                   hintStyle: TextStyle(fontSize: 20.0),
                   labelStyle:
-                  TextStyle(fontSize: 20.0,fontWeight: FontWeight.w500),
+                      TextStyle(fontSize: 20.0, fontWeight: FontWeight.w500),
                   labelText: "Address",
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.only(

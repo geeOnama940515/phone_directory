@@ -23,16 +23,19 @@ class SectorsDisplayState extends State<SectorsDisplay> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.add),
-          onPressed: () {
-            Navigator.push(
-                    context, MaterialPageRoute(builder: (_) => NewContact(part: widget.part,)))
-                .then((value) {
-              setState(() {});
-            });
-          },
-        ),
+//        floatingActionButton: FloatingActionButton(
+//          child: Icon(Icons.add),
+//          onPressed: () {
+//            Navigator.push(
+//                context,
+//                MaterialPageRoute(
+//                    builder: (_) => NewContact(
+//                          part: widget.part,
+//                        ))).then((value) {
+//              setState(() {});
+//            });
+//          },
+//        ),
         appBar: AppBar(
           backgroundColor: Colors.red,
           title: Text('Jain PhoneBook Directory'),
@@ -107,7 +110,7 @@ class SectorsDisplayState extends State<SectorsDisplay> {
                           sortedDataList[index],
                           style: TextStyle(color: Colors.indigo),
                         ),
-                        trailing: popupMenu(sortedDataList[index]),
+                        //trailing: popupMenu(sortedDataList[index]),
                         onTap: () {
                           Navigator.push(
                               context,
@@ -138,53 +141,53 @@ class SectorsDisplayState extends State<SectorsDisplay> {
     );
   }
 
-  Widget popupMenu(area) {
-    return PopupMenuButton(
-      itemBuilder: (context) {
-        var list = List<PopupMenuEntry<Object>>();
-        list.add(
-          PopupMenuItem(
-            value: 1,
-            child: Text('Update'),
-          ),
-        );
-        list.add(PopupMenuItem(
-          value: 2,
-          child: Text('Delete'),
-        ));
-        return list;
-      },
-      onSelected: (value) {
-        (value == 1) ? update(area) : delete(area);
-      },
-      icon: Icon(Icons.more_vert),
-    );
-  }
+//  Widget popupMenu(area) {
+//    return PopupMenuButton(
+//      itemBuilder: (context) {
+//        var list = List<PopupMenuEntry<Object>>();
+//        list.add(
+//          PopupMenuItem(
+//            value: 1,
+//            child: Text('Update'),
+//          ),
+//        );
+//        list.add(PopupMenuItem(
+//          value: 2,
+//          child: Text('Delete'),
+//        ));
+//        return list;
+//      },
+//      onSelected: (value) {
+//        (value == 1) ? update(area) : delete(area);
+//      },
+//      icon: Icon(Icons.more_vert),
+//    );
+//  }
 
   Future<void> onRefresh() async {
     setState(() {});
   }
 
-  void update(area) {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (_) => UpdateSector(
-                  areaName: area,
-                  part: widget.part,
-                ))).then((value) {
-      setState(() {});
-    });
-  }
-
-  void delete(area) {
-    FirebaseDatabase.instance
-        .reference()
-        .child('area${widget.part}')
-        .child(area)
-        .remove();
-    setState(() {});
-  }
+//  void update(area) {
+//    Navigator.push(
+//        context,
+//        MaterialPageRoute(
+//            builder: (_) => UpdateSector(
+//                  areaName: area,
+//                  part: widget.part,
+//                ))).then((value) {
+//      setState(() {});
+//    });
+//  }
+//
+//  void delete(area) {
+//    FirebaseDatabase.instance
+//        .reference()
+//        .child('area${widget.part}')
+//        .child(area)
+//        .remove();
+//    setState(() {});
+//  }
 }
 
 class UserSearch extends SearchDelegate<User> {

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 
 class NewContact extends StatefulWidget {
-
   String part;
 
   NewContact({this.part});

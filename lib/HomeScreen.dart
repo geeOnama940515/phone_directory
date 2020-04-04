@@ -15,7 +15,7 @@ class HomeScreen extends StatelessWidget {
             Container(
               padding: EdgeInsets.all(15.0),
               color: Colors.deepOrangeAccent,
-              height: MediaQuery.of(context).size.height*0.4,
+              height: MediaQuery.of(context).size.height * 0.4,
               child: Image(
                 image: AssetImage('assets/logo.png'),
               ),
@@ -25,17 +25,18 @@ class HomeScreen extends StatelessWidget {
               leading: Icon(Icons.location_on),
               onTap: () {
                 Navigator.pop(context);
-                Navigator.push(context, MaterialPageRoute(builder: (_)=>TempleDisplay()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (_) => TempleDisplay()));
               },
             ),
             Divider(),
-
             ListTile(
-              title: Text('Executie Board Members'),
+              title: Text('Executie Body'),
               leading: Icon(Icons.person),
               onTap: () {
                 Navigator.pop(context);
-                Navigator.push(context, MaterialPageRoute(builder: (_)=> ExecutiveBoard()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (_) => ExecutiveBoard()));
               },
             ),
             Divider(),
@@ -44,25 +45,36 @@ class HomeScreen extends StatelessWidget {
               leading: Icon(Icons.person),
               onTap: () {
                 Navigator.pop(context);
-                Navigator.push(context, MaterialPageRoute(builder: (_)=> Patrons()));
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (_) => Patrons()));
               },
             ),
             Divider(),
             ListTile(
-              title: Text('PhoneBook(M)'),
+              title: Text('PhoneBook(Male)'),
               leading: Icon(Icons.call),
               onTap: () {
                 Navigator.pop(context);
-                Navigator.push(context, MaterialPageRoute(builder: (_)=>SectorsDisplay(part: '1',)));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => SectorsDisplay(
+                              part: '1',
+                            )));
               },
             ),
             Divider(),
             ListTile(
-              title: Text('PhoneBook(F)'),
+              title: Text('PhoneBook(Female)'),
               leading: Icon(Icons.call),
               onTap: () {
                 Navigator.pop(context);
-                Navigator.push(context, MaterialPageRoute(builder: (_)=>SectorsDisplay(part: '2',)));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => SectorsDisplay(
+                              part: '2',
+                            )));
               },
             ),
             Divider(),
@@ -71,16 +83,13 @@ class HomeScreen extends StatelessWidget {
       ),
       appBar: AppBar(
         elevation: 0.0,
-        title: Text(
-          'Shree Aadinath Digamber Jain Sabha',
-          style: TextStyle(fontSize: 22.0),
-        ),
       ),
       body: Container(
         padding: EdgeInsets.all(10.0),
         decoration: BoxDecoration(
             gradient: LinearGradient(
-                colors: [Colors.red,Color(0xffffcc00)],//ffcc00 Color(0xffffb6b6)],
+                colors: [Colors.red, Color(0xffffcc00)],
+                //ffcc00 Color(0xffffb6b6)],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 stops: [0.25, 1.0])),
@@ -95,103 +104,173 @@ class HomeScreen extends StatelessWidget {
                 image: AssetImage('assets/logo.png'),
               ),
             ),
-            SizedBox(height: MediaQuery.of(context).size.height*0.04,),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.04,
+            ),
             Container(
-              width: MediaQuery.of(context).size.width*0.4,
+              width: MediaQuery.of(context).size.width * 0.4,
               child: MaterialButton(
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_)=>TempleDisplay()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => TempleDisplay()));
                 },
-                height: MediaQuery.of(context).size.height*0.065,
+                height: MediaQuery.of(context).size.height * 0.065,
                 color: Color(0xffb21f66),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.0)),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25.0)),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
-                    Icon(Icons.location_on,color: Colors.white,),
-                    SizedBox(width: 25.0,),
-                    Expanded(child: Text('Jain Mandir in Faridabad',style: TextStyle(fontSize: 20.0,color: Colors.white),))
+                    Icon(
+                      Icons.location_on,
+                      color: Colors.white,
+                    ),
+                    SizedBox(
+                      width: 25.0,
+                    ),
+                    Expanded(
+                        child: Text(
+                      'Jain Mandir in Faridabad',
+                      style: TextStyle(fontSize: 20.0, color: Colors.white),
+                    ))
                   ],
                 ),
               ),
             ),
-
-            SizedBox(height: 20.0,),
+            SizedBox(
+              height: 20.0,
+            ),
             Container(
-              width: MediaQuery.of(context).size.width*0.7,
+              width: MediaQuery.of(context).size.width * 0.7,
               child: MaterialButton(
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_)=>ExecutiveBoard()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => ExecutiveBoard()));
                 },
-                height: MediaQuery.of(context).size.height*0.065,
+                height: MediaQuery.of(context).size.height * 0.065,
                 color: Color(0xffb21f66),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.0)),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25.0)),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
-                    Icon(Icons.person,color: Colors.white,),
-                    SizedBox(width: 25.0,),
-                    Expanded(child: Text('Executive Board',style: TextStyle(fontSize: 20.0,color: Colors.white),))
+                    Icon(
+                      Icons.person,
+                      color: Colors.white,
+                    ),
+                    SizedBox(
+                      width: 25.0,
+                    ),
+                    Expanded(
+                        child: Text(
+                      'Executive Body',
+                      style: TextStyle(fontSize: 20.0, color: Colors.white),
+                    ))
                   ],
                 ),
               ),
             ),
-            SizedBox(height: 20.0,),
+            SizedBox(
+              height: 20.0,
+            ),
             Container(
-              width: MediaQuery.of(context).size.width*0.8,
+              width: MediaQuery.of(context).size.width * 0.8,
               child: MaterialButton(
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_)=>Patrons()));
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (_) => Patrons()));
                 },
-                height: MediaQuery.of(context).size.height*0.065,
+                height: MediaQuery.of(context).size.height * 0.065,
                 color: Color(0xffb21f66),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.0)),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25.0)),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
-                    Icon(Icons.person,color: Colors.white,),
-                    SizedBox(width: 25.0,),
-                    Expanded(child: Text('Patrons',style: TextStyle(fontSize: 20.0,color: Colors.white),))
+                    Icon(
+                      Icons.person,
+                      color: Colors.white,
+                    ),
+                    SizedBox(
+                      width: 25.0,
+                    ),
+                    Expanded(
+                        child: Text(
+                      'Patrons',
+                      style: TextStyle(fontSize: 20.0, color: Colors.white),
+                    ))
                   ],
                 ),
               ),
             ),
-            SizedBox(height: 20.0,),
+            SizedBox(
+              height: 20.0,
+            ),
             Container(
-              width: MediaQuery.of(context).size.width*0.7,
+              width: MediaQuery.of(context).size.width * 0.7,
               child: MaterialButton(
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_)=> SectorsDisplay(part: '1',)));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => SectorsDisplay(
+                                part: '1',
+                              )));
                 },
-                height: MediaQuery.of(context).size.height*0.065,
+                height: MediaQuery.of(context).size.height * 0.065,
                 color: Color(0xffb21f66),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.0)),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25.0)),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
-                    Icon(Icons.phone,color: Colors.white,),
-                    SizedBox(width: 25.0,),
-                    Expanded(child: Text('Phonebook(M)',style: TextStyle(fontSize: 20.0,color: Colors.white),))
+                    Icon(
+                      Icons.phone,
+                      color: Colors.white,
+                    ),
+                    SizedBox(
+                      width: 25.0,
+                    ),
+                    Expanded(
+                        child: Text(
+                      'Phonebook(Male)',
+                      style: TextStyle(fontSize: 20.0, color: Colors.white),
+                    ))
                   ],
                 ),
               ),
             ),
-            SizedBox(height: 20.0,),
+            SizedBox(
+              height: 20.0,
+            ),
             Container(
-              width: MediaQuery.of(context).size.width*0.7,
+              width: MediaQuery.of(context).size.width * 0.7,
               child: MaterialButton(
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_)=> SectorsDisplay(part: '2')));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => SectorsDisplay(part: '2')));
                 },
-                height: MediaQuery.of(context).size.height*0.065,
+                height: MediaQuery.of(context).size.height * 0.065,
                 color: Color(0xffb21f66),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.0)),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25.0)),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
-                    Icon(Icons.phone,color: Colors.white,),
-                    SizedBox(width: 25.0,),
-                    Expanded(child: Text('Phonebook(F)',style: TextStyle(fontSize: 20.0,color: Colors.white),))
+                    Icon(
+                      Icons.phone,
+                      color: Colors.white,
+                    ),
+                    SizedBox(
+                      width: 25.0,
+                    ),
+                    Expanded(
+                        child: Text(
+                      'Phonebook(Female)',
+                      style: TextStyle(fontSize: 20.0, color: Colors.white),
+                    ))
                   ],
                 ),
               ),
