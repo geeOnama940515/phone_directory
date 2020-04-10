@@ -11,20 +11,20 @@ class CoverPage extends StatefulWidget{
 
 class CoverPageState extends State<CoverPage>{
 
-  @override
-  void initState() {
-    super.initState();
-    startTime();
-  }
-
-  startTime() async {
-    var duration = Duration(seconds: 5);
-    return Timer(duration, route);
-  }
-
-  route() {
-    Navigator.push(context, MaterialPageRoute(builder: (_) => Description()));
-  }
+//  @override
+//  void initState() {
+//    super.initState();
+//    startTime();
+//  }
+//
+//  startTime() async {
+//    var duration = Duration(seconds: 5);
+//    return Timer(duration, route);
+//  }
+//
+//  route() {
+//    Navigator.push(context, MaterialPageRoute(builder: (_) => Description()));
+//  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,10 +50,10 @@ class CoverPageState extends State<CoverPage>{
                     color: Colors.black45,
                   ),
                   margin: EdgeInsets.only(top: 30.0, right: 20.0),
-                  padding: EdgeInsets.all(5.0),
+                  padding: EdgeInsets.all(7.0),
                   child: Text(
-                    'Next',
-                    style: TextStyle(color: Colors.white),
+                    'Next Page',
+                    style: TextStyle(color: Colors.white,fontSize: 17.0),
                   )),
             ),
           ),

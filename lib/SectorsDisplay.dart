@@ -108,7 +108,10 @@ class SectorsDisplayState extends State<SectorsDisplay> {
                         leading: Icon(Icons.arrow_right),
                         title: Text(
                           sortedDataList[index],
-                          style: TextStyle(color: Colors.indigo),
+                          style: TextStyle(
+                              color: Colors.indigo,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20.0),
                         ),
                         //trailing: popupMenu(sortedDataList[index]),
                         onTap: () {

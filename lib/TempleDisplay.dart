@@ -64,12 +64,18 @@ class TempleDisplayState extends State<TempleDisplay> {
                             leading: Icon(Icons.location_on),
                             title: Text(
                               listItems[index].name,
-                              style: TextStyle(color: Colors.indigo),
+                              style: TextStyle(
+                                  color: Colors.indigo,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20.0),
                             ),
                             //trailing: popupMenu(listItems[index]),
                             subtitle: Text(
                               listItems[index].address,
-                              style: TextStyle(fontSize: 15.0),
+                              style: TextStyle(
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
                           ),
                           Divider(

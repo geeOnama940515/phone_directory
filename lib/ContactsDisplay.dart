@@ -85,7 +85,10 @@ class ContactsDisplayState extends State<ContactsDisplay> {
                         leading: Icon(Icons.person),
                         title: Text(
                           listItems[index].name,
-                          style: TextStyle(color: Colors.indigo),
+                          style: TextStyle(
+                              color: Colors.indigo,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20.0),
                         ),
 //                        trailing: popupMenu(listItems[index]),
                         onTap: () {

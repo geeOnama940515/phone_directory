@@ -21,7 +21,10 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             ListTile(
-              title: Text('Jain mandir in Faridabad'),
+              title: Text(
+                'Jain mandir in Faridabad',
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 17.0),
+              ),
               leading: Icon(Icons.location_on),
               onTap: () {
                 Navigator.pop(context);
@@ -31,7 +34,10 @@ class HomeScreen extends StatelessWidget {
             ),
             Divider(),
             ListTile(
-              title: Text('Executie Body'),
+              title: Text(
+                'Executie Body',
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 17.0),
+              ),
               leading: Icon(Icons.person),
               onTap: () {
                 Navigator.pop(context);
@@ -41,7 +47,10 @@ class HomeScreen extends StatelessWidget {
             ),
             Divider(),
             ListTile(
-              title: Text('Patrons'),
+              title: Text(
+                'Patrons',
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 17.0),
+              ),
               leading: Icon(Icons.person),
               onTap: () {
                 Navigator.pop(context);
@@ -51,7 +60,10 @@ class HomeScreen extends StatelessWidget {
             ),
             Divider(),
             ListTile(
-              title: Text('PhoneBook(Male)'),
+              title: Text(
+                'PhoneBook(Male)',
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 17.0),
+              ),
               leading: Icon(Icons.call),
               onTap: () {
                 Navigator.pop(context);
@@ -65,7 +77,10 @@ class HomeScreen extends StatelessWidget {
             ),
             Divider(),
             ListTile(
-              title: Text('PhoneBook(Female)'),
+              title: Text(
+                'PhoneBook(Female)',
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 17.0),
+              ),
               leading: Icon(Icons.call),
               onTap: () {
                 Navigator.pop(context);

@@ -72,10 +72,10 @@ class CarouselDemo extends StatelessWidget {
                     color: Colors.black45,
                   ),
                   margin: EdgeInsets.only(right: 20.0, top: 30.0),
-                  padding: EdgeInsets.all(5.0),
+                  padding: EdgeInsets.all(7.0),
                   child: Text(
                     'Skip ad',
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: Colors.white,fontSize: 17.0),
                   )),
             ),
           ),

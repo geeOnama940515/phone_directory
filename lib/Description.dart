@@ -17,7 +17,7 @@ class DescriptionState extends State<Description> {
   }
 
   startTime() async {
-    var duration = Duration(seconds: 5);
+    var duration = Duration(seconds: 3);
     return Timer(duration, route);
   }
 
@@ -55,10 +55,10 @@ class DescriptionState extends State<Description> {
                             color: Colors.black45,
                           ),
 //                          margin: EdgeInsets.only(right: 20.0, top: 30.0),
-                          padding: EdgeInsets.all(5.0),
+                          padding: EdgeInsets.all(7.0),
                           child: Text(
-                            'Skip ad',
-                            style: TextStyle(color: Colors.white),
+                            'Next Page',
+                            style: TextStyle(color: Colors.white,fontSize: 17.0),
                           )),
                     ),
                   ),
