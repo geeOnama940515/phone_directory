@@ -18,16 +18,16 @@ class TempleDisplayState extends State<TempleDisplay> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-//      floatingActionButton: FloatingActionButton(
-//        onPressed: () {
-//          Navigator.push(
-//                  context, MaterialPageRoute(builder: (_) => NewTemple()))
-//              .then((value) {
-//            setState(() {});
-//          });
-//        },
-//        child: Icon(Icons.add),
-//      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+                  context, MaterialPageRoute(builder: (_) => NewTemple()))
+              .then((value) {
+            setState(() {});
+          });
+        },
+        child: Icon(Icons.add),
+      ),
       appBar: AppBar(
         title: Text('Mandir in Faridabad'),
       ),
@@ -69,7 +69,7 @@ class TempleDisplayState extends State<TempleDisplay> {
                                   fontWeight: FontWeight.bold,
                                   fontSize: 20.0),
                             ),
-                            //trailing: popupMenu(listItems[index]),
+                            trailing: popupMenu(listItems[index]),
                             subtitle: Text(
                               listItems[index].address,
                               style: TextStyle(
@@ -104,46 +104,46 @@ class TempleDisplayState extends State<TempleDisplay> {
     setState(() {});
   }
 
-//  Widget popupMenu(temple) {
-//    return PopupMenuButton(
-//      itemBuilder: (context) {
-//        var list = List<PopupMenuEntry<Object>>();
-//        list.add(
-//          PopupMenuItem(
-//            value: 1,
-//            child: Text('Update'),
-//          ),
-//        );
-//        list.add(PopupMenuItem(
-//          value: 2,
-//          child: Text('Delete'),
-//        ));
-//        return list;
-//      },
-//      onSelected: (value) {
-//        (value == 1) ? update(temple) : delete(temple);
-//      },
-//      icon: Icon(Icons.more_vert),
-//    );
-//  }
-//
-//  void update(temple) {
-//    Navigator.push(
-//        context,
-//        MaterialPageRoute(
-//            builder: (_) => UpdateTemple(
-//                  temple: temple,
-//                ))).then((value) {
-//      setState(() {});
-//    });
-//  }
-//
-//  void delete(user) {
-//    FirebaseDatabase.instance
-//        .reference()
-//        .child('temple')
-//        .child(user.key)
-//        .remove();
-//    setState(() {});
-//  }
+  Widget popupMenu(temple) {
+    return PopupMenuButton(
+      itemBuilder: (context) {
+        var list = List<PopupMenuEntry<Object>>();
+        list.add(
+          PopupMenuItem(
+            value: 1,
+            child: Text('Update'),
+          ),
+        );
+        list.add(PopupMenuItem(
+          value: 2,
+          child: Text('Delete'),
+        ));
+        return list;
+      },
+      onSelected: (value) {
+        (value == 1) ? update(temple) : delete(temple);
+      },
+      icon: Icon(Icons.more_vert),
+    );
+  }
+
+  void update(temple) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (_) => UpdateTemple(
+                  temple: temple,
+                ))).then((value) {
+      setState(() {});
+    });
+  }
+
+  void delete(user) {
+    FirebaseDatabase.instance
+        .reference()
+        .child('temple')
+        .child(user.key)
+        .remove();
+    setState(() {});
+  }
 }

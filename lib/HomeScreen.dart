@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:phone_directory/ExecutiveBoard.dart';
 import 'package:phone_directory/Patrons.dart';
+import 'package:phone_directory/PreviousExecutive.dart';
 import 'package:phone_directory/SectorsDisplay.dart';
 import 'package:phone_directory/TempleDisplay.dart';
 
@@ -160,6 +161,39 @@ class HomeScreen extends StatelessWidget {
               child: MaterialButton(
                 onPressed: () {
                   Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => PreviousExecutive()));
+                },
+                height: MediaQuery.of(context).size.height * 0.065,
+                color: Color(0xffb21f66),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25.0)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Icon(
+                      Icons.person,
+                      color: Colors.white,
+                    ),
+                    SizedBox(
+                      width: 25.0,
+                    ),
+                    Expanded(
+                        child: Text(
+                          'Executive Committee(Till date)',
+                          style: TextStyle(fontSize: 20.0, color: Colors.white),
+                        ))
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 20.0,
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.7,
+              child: MaterialButton(
+                onPressed: () {
+                  Navigator.push(context,
                       MaterialPageRoute(builder: (_) => ExecutiveBoard()));
                 },
                 height: MediaQuery.of(context).size.height * 0.065,
@@ -248,7 +282,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                     Expanded(
                         child: Text(
-                      'Phonebook(Male)',
+                      'Phonebook(M)',
                       style: TextStyle(fontSize: 20.0, color: Colors.white),
                     ))
                   ],
@@ -283,7 +317,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                     Expanded(
                         child: Text(
-                      'Phonebook(Female)',
+                      'Phonebook(F)',
                       style: TextStyle(fontSize: 20.0, color: Colors.white),
                     ))
                   ],

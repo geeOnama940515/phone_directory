@@ -1,46 +1,23 @@
-import 'dart:ui';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:phone_directory/models/User.dart';
 
-class UpdateExecutiveBoard extends StatefulWidget {
-  User user;
+class NewPreviousExecutiveMember extends StatefulWidget{
+  String post;
 
-  UpdateExecutiveBoard({this.user});
-
+  NewPreviousExecutiveMember({this.post});
   @override
   State<StatefulWidget> createState() {
-    return UpdateExecutiveBoardState();
+    return NewPreviousExecutiveMemberState();
   }
 }
 
-class UpdateExecutiveBoardState extends State<UpdateExecutiveBoard> {
-  String name, phone, designation, address, priority;
+class NewPreviousExecutiveMemberState extends State<NewPreviousExecutiveMember>{
+  String name, startDate, endDate, priority;
 
-  TextEditingController nameController,
-      priorityController,
-      phoneController,
-      designationController,
-      addressController;
-
-  @override
-  void initState() {
-    super.initState();
-
-    name = widget.user.name;
-    priority=widget.user.priority;
-    phone = widget.user.phone;
-    designation = widget.user.designation;
-    address = widget.user.address;
-
-    nameController = TextEditingController(text: widget.user.name);
-    phoneController = TextEditingController(text: widget.user.phone);
-    designationController =
-        TextEditingController(text: widget.user.designation);
-    priorityController=TextEditingController(text: widget.user.priority);
-    addressController = TextEditingController(text: widget.user.address);
-  }
+  TextEditingController nameController = TextEditingController();
+  TextEditingController startDateController = TextEditingController();
+  TextEditingController endDateController = TextEditingController();
+  TextEditingController priorityController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -49,14 +26,15 @@ class UpdateExecutiveBoardState extends State<UpdateExecutiveBoard> {
         onPressed: () {
           FirebaseDatabase.instance
               .reference()
-              .child('executiveBoard')
-              .child(widget.user.key)
+              .child('previousExecutive')
+              .child(widget.post)
+          .child('members')
+              .push()
               .set({
-          'name': name,
-          'phone': phone,
-          'priority': priority,
-          'address': address,
-          'designation': designation
+            'name': name,
+            'startDate': startDate,
+            'endDate': endDate,
+            'priority': int.parse(priority)
           });
           Navigator.pop(context, true);
         },
@@ -67,46 +45,23 @@ class UpdateExecutiveBoardState extends State<UpdateExecutiveBoard> {
         backgroundColor: Colors.red,
       ),
       appBar: AppBar(
-        title: Text("Update Executive Member Details"),
+        title: Text("Contact Details"),
         backgroundColor: Colors.red,
         elevation: 0,
       ),
       body: ListView(
         children: <Widget>[
-          Container(
-            height: 200,
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.centerLeft,
-                    end: Alignment.centerRight,
-                    stops: [0.5, 0.9],
-                    colors: [Colors.red, Colors.deepOrange.shade300])),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                CircleAvatar(
-                    minRadius: 60,
-                    backgroundColor: Colors.deepOrange.shade300,
-                    child: Icon(
-                      Icons.person,
-                      size: 80,
-                      color: Colors.red,
-                    )),
-              ],
-            ),
-          ),
           Padding(
             padding: EdgeInsets.only(top: 15.0, left: 12.0, right: 12.0),
             child: TextFormField(
               onChanged: (value) {
-                designation = designationController.text;
+                name = value;
               },
               keyboardType: TextInputType.text,
-              controller: designationController,
+              controller: nameController,
               decoration: InputDecoration(
                 prefixIcon: Icon(
-                  Icons.location_on,
+                  Icons.person,
                   color: Colors.red,
                 ),
                 enabledBorder: OutlineInputBorder(
@@ -114,11 +69,11 @@ class UpdateExecutiveBoardState extends State<UpdateExecutiveBoard> {
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(25.0),
                         bottomRight: Radius.circular(25.0))),
-                hintText: "Enter New Designation",
+                hintText: "Enter Name",
                 hintStyle: TextStyle(fontSize: 20.0),
                 labelStyle:
                 TextStyle(fontSize: 20.0, fontWeight: FontWeight.w500),
-                labelText: "Designation",
+                labelText: "Name",
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(25.0),
@@ -130,13 +85,13 @@ class UpdateExecutiveBoardState extends State<UpdateExecutiveBoard> {
             padding: EdgeInsets.only(top: 15.0, left: 12.0, right: 12.0),
             child: TextFormField(
               keyboardType: TextInputType.text,
-              controller: nameController,
+              controller: startDateController,
               onChanged: (value) {
-                name = value;
+                startDate = value;
               },
               decoration: InputDecoration(
                   prefixIcon: Icon(
-                    Icons.person,
+                    Icons.calendar_today,
                     color: Colors.red,
                   ),
                   enabledBorder: OutlineInputBorder(
@@ -145,11 +100,11 @@ class UpdateExecutiveBoardState extends State<UpdateExecutiveBoard> {
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(25.0),
                           bottomRight: Radius.circular(25.0))),
-                  hintText: "Enter New Name",
+                  hintText: "Enter Start Date",
                   hintStyle: TextStyle(fontSize: 20.0),
                   labelStyle:
                   TextStyle(fontSize: 20.0, fontWeight: FontWeight.w500),
-                  labelText: "Name",
+                  labelText: "Start Date",
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(30.0),
@@ -160,13 +115,13 @@ class UpdateExecutiveBoardState extends State<UpdateExecutiveBoard> {
             padding: EdgeInsets.only(top: 15.0, left: 12.0, right: 12.0),
             child: TextFormField(
               onChanged: (value) {
-                phone = value;
+                endDate = value;
               },
               keyboardType: TextInputType.number,
-              controller: phoneController,
+              controller: endDateController,
               decoration: InputDecoration(
                   prefixIcon: Icon(
-                    Icons.phone,
+                    Icons.calendar_today,
                     color: Colors.red,
                   ),
                   enabledBorder: OutlineInputBorder(
@@ -175,11 +130,11 @@ class UpdateExecutiveBoardState extends State<UpdateExecutiveBoard> {
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(25.0),
                           bottomRight: Radius.circular(25.0))),
-                  hintText: "Enter New Phone Number",
+                  hintText: "Enter End Date",
                   hintStyle: TextStyle(fontSize: 20.0),
                   labelStyle:
                   TextStyle(fontSize: 20.0, fontWeight: FontWeight.w500),
-                  labelText: "Phone Number",
+                  labelText: "End Date",
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(25.0),
@@ -189,14 +144,14 @@ class UpdateExecutiveBoardState extends State<UpdateExecutiveBoard> {
           Padding(
             padding: EdgeInsets.only(top: 15.0, left: 12.0, right: 12.0),
             child: TextFormField(
-              keyboardType: TextInputType.text,
-              controller: priorityController,
               onChanged: (value) {
                 priority = value;
               },
+              keyboardType: TextInputType.emailAddress,
+              controller: priorityController,
               decoration: InputDecoration(
                   prefixIcon: Icon(
-                    Icons.swap_vertical_circle,
+                    Icons.swap_vert,
                     color: Colors.red,
                   ),
                   enabledBorder: OutlineInputBorder(
@@ -205,42 +160,11 @@ class UpdateExecutiveBoardState extends State<UpdateExecutiveBoard> {
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(25.0),
                           bottomRight: Radius.circular(25.0))),
-                  hintText: "Enter New Priority",
+                  hintText: "Enter Priority",
                   hintStyle: TextStyle(fontSize: 20.0),
                   labelStyle:
                   TextStyle(fontSize: 20.0, fontWeight: FontWeight.w500),
                   labelText: "Priority",
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(30.0),
-                          bottomRight: Radius.circular(30.0)))),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 15.0, left: 12.0, right: 12.0),
-            child: TextFormField(
-              onChanged: (value) {
-                address = addressController.text;
-              },
-              keyboardType: TextInputType.multiline,
-              maxLines: null,
-              controller: addressController,
-              decoration: InputDecoration(
-                  prefixIcon: Icon(
-                    Icons.home,
-                    color: Colors.red,
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                      borderSide:
-                      BorderSide(color: Colors.redAccent, width: 2.0),
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(25.0),
-                          bottomRight: Radius.circular(25.0))),
-                  hintText: "Enter New Address",
-                  hintStyle: TextStyle(fontSize: 20.0),
-                  labelStyle:
-                  TextStyle(fontSize: 20.0, fontWeight: FontWeight.w500),
-                  labelText: "Address",
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(25.0),

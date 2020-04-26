@@ -161,7 +161,7 @@ class UpdateTempleState extends State<UpdateTemple> {
               controller: priorityController,
               decoration: InputDecoration(
                 prefixIcon: Icon(
-                  Icons.location_on,
+                  Icons.swap_vertical_circle,
                   color: Colors.red,
                 ),
                 enabledBorder: OutlineInputBorder(

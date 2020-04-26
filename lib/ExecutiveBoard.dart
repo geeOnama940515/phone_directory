@@ -20,16 +20,16 @@ class ExecutiveBoardState extends State<ExecutiveBoard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-//      floatingActionButton: FloatingActionButton(
-//        onPressed: () {
-//          Navigator.push(context,
-//                  MaterialPageRoute(builder: (_) => NewExecutiveBoard()))
-//              .then((value) {
-//            setState(() {});
-//          });
-//        },
-//        child: Icon(Icons.add),
-//      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(context,
+                  MaterialPageRoute(builder: (_) => NewExecutiveBoard()))
+              .then((value) {
+            setState(() {});
+          });
+        },
+        child: Icon(Icons.add),
+      ),
       appBar: AppBar(
         title: Text('Executive Members'),
       ),
@@ -57,7 +57,12 @@ class ExecutiveBoardState extends State<ExecutiveBoard> {
                         designation: value['designation']));
                   });
                 }
+//                print(listItems);
+//                print(listItems.length);
+                listItems.forEach((element) {print(element.priority);});
                 listItems.sort((a, b) => a.priority.compareTo(b.priority));
+                print(listItems);
+                print(listItems.length);
                 return ListView.builder(
                     itemCount: listItems.length,
                     itemBuilder: (context, index) {
@@ -69,7 +74,7 @@ class ExecutiveBoardState extends State<ExecutiveBoard> {
                               listItems[index].designation,
                               style: TextStyle(color: Colors.indigo),
                             ),
-//                            trailing: popupMenu(listItems[index]),
+                            trailing: popupMenu(listItems[index]),
                             onTap: () {
                               Navigator.push(
                                   context,
@@ -109,43 +114,43 @@ class ExecutiveBoardState extends State<ExecutiveBoard> {
     setState(() {});
   }
 
-//  Widget popupMenu(user) {
-//    return PopupMenuButton(
-//      itemBuilder: (context) {
-//        var list = List<PopupMenuEntry<Object>>();
-//        list.add(
-//          PopupMenuItem(
-//            value: 1,
-//            child: Text('Update'),
-//          ),
-//        );
-//        list.add(PopupMenuItem(
-//          value: 2,
-//          child: Text('Delete'),
-//        ));
-//        return list;
-//      },
-//      onSelected: (value) {
-//        (value == 1) ? update(user) : delete(user);
-//      },
-//      icon: Icon(Icons.more_vert),
-//    );
-//  }
-//
-//  void update(user) {
-//    Navigator.push(context,
-//            MaterialPageRoute(builder: (_) => UpdateExecutiveBoard(user: user)))
-//        .then((value) {
-//      setState(() {});
-//    });
-//  }
-//
-//  void delete(user) {
-//    FirebaseDatabase.instance
-//        .reference()
-//        .child('executiveBoard')
-//        .child(user.key)
-//        .remove();
-//    setState(() {});
-//  }
+  Widget popupMenu(user) {
+    return PopupMenuButton(
+      itemBuilder: (context) {
+        var list = List<PopupMenuEntry<Object>>();
+        list.add(
+          PopupMenuItem(
+            value: 1,
+            child: Text('Update'),
+          ),
+        );
+        list.add(PopupMenuItem(
+          value: 2,
+          child: Text('Delete'),
+        ));
+        return list;
+      },
+      onSelected: (value) {
+        (value == 1) ? update(user) : delete(user);
+      },
+      icon: Icon(Icons.more_vert),
+    );
+  }
+
+  void update(user) {
+    Navigator.push(context,
+            MaterialPageRoute(builder: (_) => UpdateExecutiveBoard(user: user)))
+        .then((value) {
+      setState(() {});
+    });
+  }
+
+  void delete(user) {
+    FirebaseDatabase.instance
+        .reference()
+        .child('executiveBoard')
+        .child(user.key)
+        .remove();
+    setState(() {});
+  }
 }
