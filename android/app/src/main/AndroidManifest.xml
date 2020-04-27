@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="Jain e-Phone Book"
+        android:label="Jain Phone-Book"
         android:icon="@mipmap/logo">
         <activity
             android:name=".MainActivity"

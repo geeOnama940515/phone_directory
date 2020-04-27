@@ -29,7 +29,7 @@ class TempleDisplayState extends State<TempleDisplay> {
         child: Icon(Icons.add),
       ),
       appBar: AppBar(
-        title: Text('Mandir in Faridabad'),
+        title: Text('Digamber Jain Mandir'),
       ),
       body: Container(
         height: MediaQuery.of(context).size.height,

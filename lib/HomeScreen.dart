@@ -36,19 +36,6 @@ class HomeScreen extends StatelessWidget {
             Divider(),
             ListTile(
               title: Text(
-                'Executie Body',
-                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 17.0),
-              ),
-              leading: Icon(Icons.person),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (_) => ExecutiveBoard()));
-              },
-            ),
-            Divider(),
-            ListTile(
-              title: Text(
                 'Patrons',
                 style: TextStyle(fontWeight: FontWeight.w600, fontSize: 17.0),
               ),
@@ -62,7 +49,33 @@ class HomeScreen extends StatelessWidget {
             Divider(),
             ListTile(
               title: Text(
-                'PhoneBook(Male)',
+                'Executie Committee (Till Date)',
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 17.0),
+              ),
+              leading: Icon(Icons.person),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (_) => ExecutiveBoard()));
+              },
+            ),
+            Divider(),
+            ListTile(
+              title: Text(
+                'Executie Body',
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 17.0),
+              ),
+              leading: Icon(Icons.person),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (_) => ExecutiveBoard()));
+              },
+            ),
+            Divider(),
+            ListTile(
+              title: Text(
+                'Phone-Book (M)',
                 style: TextStyle(fontWeight: FontWeight.w600, fontSize: 17.0),
               ),
               leading: Icon(Icons.call),
@@ -79,7 +92,7 @@ class HomeScreen extends StatelessWidget {
             Divider(),
             ListTile(
               title: Text(
-                'PhoneBook(Female)',
+                'Phone-Book (F)',
                 style: TextStyle(fontWeight: FontWeight.w600, fontSize: 17.0),
               ),
               leading: Icon(Icons.call),
@@ -157,6 +170,39 @@ class HomeScreen extends StatelessWidget {
               height: 20.0,
             ),
             Container(
+              width: MediaQuery.of(context).size.width * 0.8,
+              child: MaterialButton(
+                onPressed: () {
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (_) => Patrons()));
+                },
+                height: MediaQuery.of(context).size.height * 0.065,
+                color: Color(0xffb21f66),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25.0)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Icon(
+                      Icons.person,
+                      color: Colors.white,
+                    ),
+                    SizedBox(
+                      width: 25.0,
+                    ),
+                    Expanded(
+                        child: Text(
+                      'Patrons',
+                      style: TextStyle(fontSize: 20.0, color: Colors.white),
+                    ))
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 20.0,
+            ),
+            Container(
               width: MediaQuery.of(context).size.width * 0.7,
               child: MaterialButton(
                 onPressed: () {
@@ -179,9 +225,9 @@ class HomeScreen extends StatelessWidget {
                     ),
                     Expanded(
                         child: Text(
-                          'Executive Committee(Till date)',
-                          style: TextStyle(fontSize: 20.0, color: Colors.white),
-                        ))
+                      'Executive Committee (Till date)',
+                      style: TextStyle(fontSize: 20.0, color: Colors.white),
+                    ))
                   ],
                 ),
               ),
@@ -223,39 +269,6 @@ class HomeScreen extends StatelessWidget {
               height: 20.0,
             ),
             Container(
-              width: MediaQuery.of(context).size.width * 0.8,
-              child: MaterialButton(
-                onPressed: () {
-                  Navigator.push(
-                      context, MaterialPageRoute(builder: (_) => Patrons()));
-                },
-                height: MediaQuery.of(context).size.height * 0.065,
-                color: Color(0xffb21f66),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25.0)),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Icon(
-                      Icons.person,
-                      color: Colors.white,
-                    ),
-                    SizedBox(
-                      width: 25.0,
-                    ),
-                    Expanded(
-                        child: Text(
-                      'Patrons',
-                      style: TextStyle(fontSize: 20.0, color: Colors.white),
-                    ))
-                  ],
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 20.0,
-            ),
-            Container(
               width: MediaQuery.of(context).size.width * 0.7,
               child: MaterialButton(
                 onPressed: () {
@@ -282,7 +295,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                     Expanded(
                         child: Text(
-                      'Phonebook(M)',
+                      'Phone-Book (M)',
                       style: TextStyle(fontSize: 20.0, color: Colors.white),
                     ))
                   ],
@@ -317,7 +330,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                     Expanded(
                         child: Text(
-                      'Phonebook(F)',
+                      'Phone-Book (F)',
                       style: TextStyle(fontSize: 20.0, color: Colors.white),
                     ))
                   ],

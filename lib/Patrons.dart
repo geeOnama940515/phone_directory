@@ -31,7 +31,7 @@ class PatronsState extends State<Patrons> {
         child: Icon(Icons.add),
       ),
       appBar: AppBar(
-        title: Text('Patrons Members'),
+        title: Text('Patrons'),
       ),
       body: Container(
         height: MediaQuery.of(context).size.height,

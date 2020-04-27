@@ -38,7 +38,7 @@ class SectorsDisplayState extends State<SectorsDisplay> {
         ),
         appBar: AppBar(
           backgroundColor: Colors.red,
-          title: Text('Jain PhoneBook Directory'),
+          title: Text('Jain Phone-Book'),
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.search),

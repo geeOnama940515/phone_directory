@@ -20,7 +20,7 @@ class PreviousExecutiveState extends State<PreviousExecutive>{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Past Office Bearers'),
+        title: Text('Office-Bearers'),
       ),
       body: Container(
         height: MediaQuery.of(context).size.height,
@@ -56,7 +56,10 @@ class PreviousExecutiveState extends State<PreviousExecutive>{
                             leading: Icon(Icons.person),
                             title: Text(
                               listItems[index].post,
-                              style: TextStyle(color: Colors.indigo),
+                                style: TextStyle(
+                                    color: Colors.indigo,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20.0),
                             ),
                             trailing: popupMenu(listItems[index]),
                             onTap: () {
